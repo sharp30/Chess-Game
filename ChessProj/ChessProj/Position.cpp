@@ -6,9 +6,32 @@ Position::Position(unsigned int row, int col)
 	this->setRow(row);
 }
 
+
+/*
+finish this function- unfinished!!
+*/
 void Position::castStrToPos(Position& src, Position& dest, string path)
 {	
 	char ch = path[0];
+	
+	switch (ch)
+	{
+	case 'a':
+		src.setRow(A);
+		break;
+	case 'b':
+		break;
+	case 'c':
+		break;
+	case 'd':
+		break;
+	case 'e':
+		break;
+	case 'f':
+		break;
+	case 'g':
+		break;
+	}
 
 	src.setRow(atoi(path.c_str()));
 }
