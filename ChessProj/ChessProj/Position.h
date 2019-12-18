@@ -5,6 +5,8 @@ using std::cout;
 using std::cin;
 using std::endl;
 
+enum StrToPos {A, B, C, D, E, F, G, H};
+
 class Position {
 protected:
 	unsigned int _row;
