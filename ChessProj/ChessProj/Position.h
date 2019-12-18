@@ -12,7 +12,7 @@ protected:
 
 public:
 	Position(unsigned int row, int col);
-	~Position();
+	//default distructor
 	static void castStrToPos(Position& src, Position& dest, string path);
 	const unsigned int getRow();
 	const unsigned int const getCol();
