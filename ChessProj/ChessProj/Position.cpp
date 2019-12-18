@@ -7,8 +7,10 @@ Position::Position(unsigned int row, int col)
 }
 
 void Position::castStrToPos(Position& src, Position& dest, string path)
-{
+{	
+	char ch = path[0];
 
+	src.setRow(atoi(path.c_str()));
 }
 
 const unsigned int Position::getRow()
