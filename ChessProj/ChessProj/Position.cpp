@@ -7,6 +7,12 @@ Position::Position(unsigned int row, int col)
 	this->setRow(row);
 }
 
+Position::Position(Position& pos)
+{
+	this->setCol(pos.getCol());
+	this->setRow(pos.getRow());
+}
+
 
 /*
 function will cast a string with 4 elements to source and destination positions

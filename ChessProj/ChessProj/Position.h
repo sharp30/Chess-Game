@@ -14,7 +14,8 @@ protected:
 
 public:
 	Position(unsigned int row, int col);
-	//default distructor
+	Position(Position& pos); //copy c'tor
+
 	static void castStrToPos(Position& src, Position& dest, string path);
 	const unsigned int getRow();
 	const unsigned int const getCol();
