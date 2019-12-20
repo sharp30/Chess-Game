@@ -24,66 +24,13 @@ void Position::castStrToPos(Position& src, Position& dest, string path)
 	//Example of a string- "e2e4"
 
 	//first element
-	switch (path[0])
-	{
-	case 'a':
-		src.setCol(A);
-		break;
-	case 'b':
-		src.setCol(B);
-		break;
-	case 'c':
-		src.setCol(C);
-		break;
-	case 'd':
-		src.setCol(D);
-		break;
-	case 'e':
-		src.setCol(E);
-		break;
-	case 'f':
-		src.setCol(F);
-		break;
-	case 'g':
-		src.setCol(G);
-		break;
-	case 'h':
-		src.setCol(H);
-		break;
-	}
+	src.setCol(((int)path[0] - 'a'));
 
 	//second element
 	src.setRow(((int)path[1] - '0'));
 
-
 	//third element
-	switch (path[2])
-	{
-	case 'a':
-		dest.setCol(A);
-		break;
-	case 'b':
-		dest.setCol(B);
-		break;
-	case 'c':
-		dest.setCol(C);
-		break;
-	case 'd':
-		dest.setCol(D);
-		break;
-	case 'e':
-		dest.setCol(E);
-		break;
-	case 'f':
-		dest.setCol(F);
-		break;
-	case 'g':
-		dest.setCol(G);
-		break;
-	case 'h':
-		dest.setCol(H);
-		break;
-	}
+	dest.setCol(((int)path[2] - 'a'));
 
 	//fourth element
 	dest.setRow(((int)path[3] - '0'));
