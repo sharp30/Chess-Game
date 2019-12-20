@@ -6,12 +6,12 @@
 const int TABLE_SIZE = 8;
 using std::string;
 
-class Rook
+class Rook : public Piece
 {
 	protected:
 		bool _isMoved;
 	public:
-		Rook(string color, string type);
+		Rook(string color);
 		~Rook();
 		virtual void buildMoveOptions(const Piece*  board[][TABLE_SIZE]);
 
