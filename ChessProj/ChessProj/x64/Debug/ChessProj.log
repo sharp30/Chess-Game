@@ -1,0 +1,4 @@
+﻿  Position.cpp
+C:\Users\משתמש\Documents\Official Magshimim\Magshimim 11th grade\advanced-programming\LocalChessProject\chessproject2019\ChessProj\ChessProj\Position.h(20,21): warning C4114: same type qualifier used more than once
+C:\Users\משתמש\Documents\Official Magshimim\Magshimim 11th grade\advanced-programming\LocalChessProject\chessproject2019\ChessProj\ChessProj\Position.cpp(108,1): warning C4326: return type of 'main' should be 'int' instead of 'void'
+  ChessProj.vcxproj -> C:\Users\משתמש\Documents\Official Magshimim\Magshimim 11th grade\advanced-programming\LocalChessProject\chessproject2019\ChessProj\x64\Debug\ChessProj.exe
