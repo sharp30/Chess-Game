@@ -126,6 +126,7 @@
     <None Include="chessGraphics.exe" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\chess\chess\Rook.cpp" />
     <ClCompile Include="Piece.cpp" />
     <ClCompile Include="Position.cpp" />
     <ClCompile Include="Source.cpp" />
