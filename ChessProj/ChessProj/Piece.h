@@ -22,5 +22,5 @@ public:
 	//virtual void buildMoveOptions(const Piece* board[][TABLE_SIZE]);
 	const string getType();
 	const string getColor();
-	virtual const bool isValidMove(const Piece* table, Position src, Position dest) = 0;
+	virtual const bool isValidMove(const Piece* table, Position dest) = 0;
 };
