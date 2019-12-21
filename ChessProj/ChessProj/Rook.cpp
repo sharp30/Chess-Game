@@ -10,10 +10,22 @@ Rook::~Rook()
 {
 
 }
-const bool Rook::isValidMove(const Piece* table, Position dest)
+const bool Rook::isValidMove(const Piece* table[][TABLE_SIZE], Position dest)
 {
-	
+	bool row = this->_pos.getRow() == dest.getRow();
+	bool col = this->_pos.getCol() == dest.getCol();
+	if (!row && !col)
+	{
+		return false;
+	}
+	Position check(dest);
+
 }
+
+
+
+
+
 /*
 This function adds to moveOptions all the places Rook piece can get move to (before checks about mate)
 Input:board -> the board of the game

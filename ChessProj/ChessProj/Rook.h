@@ -15,7 +15,7 @@ class Rook : public Piece
 		Rook(string color);
 		~Rook();
 		//virtual void buildMoveOptions(const Piece*  board[][TABLE_SIZE]);
-		virtual const bool isValidMove(const Piece* table, Position dest);
+		virtual const bool isValidMove(const Piece* table[][TABLE_SIZE], Position dest);
 
 
 };

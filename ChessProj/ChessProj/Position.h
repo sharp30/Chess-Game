@@ -21,4 +21,7 @@ public:
 	const unsigned int const getCol();
 	void setRow(unsigned int row);
 	void setCol(unsigned int col);
+	bool operator ==(Position other);
+	bool operator !=(Position other);
+
 };

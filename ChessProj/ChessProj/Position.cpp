@@ -56,6 +56,18 @@ void Position::setCol(unsigned int col)
 	this->_col = col;
 }
 
+
+bool Position::operator ==(Position other)
+{
+	return this->_row == other._row && this->_col == other._col;
+}
+
+
+bool Position::operator !=(Position other)
+{
+	return !(*this == other);
+}
+
 //main to check class Position
 /*
 void main()
