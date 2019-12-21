@@ -3,14 +3,17 @@
 
 Rook::Rook(string color) : Piece(color,"Rook")
 {
-	
+	_isMoved = false;
 }
 
-Rook::~Rook()
-{
+Rook::~Rook() = default;
 
-}
-
+/*
+This function checks if the object can execute the move --- according to rook moving rules only!!!
+Input:table -> the board of the game ::Piece*[][TABLE_SIZE]
+	  dest -> the destination to move to :: Position\
+Output:Is the move valid? ::bool
+*/
 const bool Rook::isValidMove(const Piece* table[][TABLE_SIZE], Position dest)
 {
 	bool row = this->_pos.getRow() == dest.getRow();
@@ -27,6 +30,10 @@ const bool Rook::isValidMove(const Piece* table[][TABLE_SIZE], Position dest)
 	{
 		if (table[comp.getRow][comp.getCol()] != nullptr)
 		{
+			/*
+			Piece x = table[comp.getRow][comp.getCol()].getColor();
+			if(!(_isMoved == false && x.getColor() == this->getColor && x.getType("king)))
+			*/
 			return false;
 		}
 		if (row)
