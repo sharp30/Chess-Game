@@ -10,20 +10,36 @@ Rook::~Rook()
 {
 
 }
+
 const bool Rook::isValidMove(const Piece* table[][TABLE_SIZE], Position dest)
 {
 	bool row = this->_pos.getRow() == dest.getRow();
 	bool col = this->_pos.getCol() == dest.getCol();
+	bool isAbove = false;
+	Position comp(dest);
+	
 	if (!row && !col)
 	{
 		return false;
 	}
-	Position check(dest);
-
+	isAbove = dest.getRow() > this->_pos.getRow() || dest.getCol() > this->_pos.getCol();
+	while (comp != this->_pos)
+	{
+		if (table[comp.getRow][comp.getCol()] != nullptr)
+		{
+			return false;
+		}
+		if (row)
+		{
+			comp.setRow(isAbove ? comp.getRow() - 1 : comp.getRow() + 1);
+		}
+		else
+		{
+			comp.setCol(isAbove ? comp.getCol() - 1 : comp.getCol() + 1);
+		}
+	}	
+	return true;
 }
-
-
-
 
 
 /*
