@@ -28,7 +28,8 @@ const bool Pawn::isValidMove(const Piece* table[][TABLE_SIZE], Position dest)
 	}
 	else if(abs((int)(this->_pos.getCol() -dest.getCol())) == 1)
 	{
-		return table[dest.getRow()][dest.getCol()];
+		return table[dest.getRow()][dest.getCol()] != nullptr;
+		//because the checking about the piece color is happening in the Main checking function 
 	}
 	//check about en passment
 	return false;
