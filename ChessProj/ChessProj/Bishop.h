@@ -5,14 +5,14 @@
 
 using std::string;
 
-class Pawn : public Piece
+class Bishop : public Piece
 {
 protected:
 	bool _isMoved;
 public:
 
-	Pawn(string color,Position pos);
-	~Pawn();
+	Bishop(string color, Position pos);
+	~Bishop();
 	//virtual void buildMoveOptions(const Piece*  board[][TABLE_SIZE]);
 	virtual const bool isValidMove(const Piece* table[][TABLE_SIZE], Position dest);
 };

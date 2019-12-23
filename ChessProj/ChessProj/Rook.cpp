@@ -1,11 +1,12 @@
 #pragma once
 #include "Rook.h"
-
-Rook::Rook(string color) : Piece(color,"Rook")
+// ------------------------ constractor --------------------------
+Rook::Rook(string color, Position pos) : Piece(color,"Rook",pos)
 {
 	_isMoved = false;
 }
-
+ 
+// ------------------destractor --------------------------------
 Rook::~Rook() = default;
 
 /*

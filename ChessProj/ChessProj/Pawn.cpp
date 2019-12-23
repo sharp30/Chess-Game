@@ -1,8 +1,8 @@
 #include "Pawn.h"
 #include <cmath>
 
-//constructor of Pawn
-Pawn::Pawn(string color) :Piece(color,"Pawn")
+//constractor of Pawn
+Pawn::Pawn(string color, Position pos) :Piece(color,"Pawn",pos)
 {
 	_isMoved = false;
 }

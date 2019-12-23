@@ -17,7 +17,7 @@ void main()
 {
 	srand(time_t(NULL));
 	system("Start chessGraphics.exe");
-	sleep(1000)
+	//sleep(1000);
 	
 	Pipe p;
 	bool isConnect = p.connect();
