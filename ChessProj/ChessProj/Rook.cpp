@@ -28,7 +28,7 @@ const bool Rook::isValidMove(const Piece* table[][TABLE_SIZE], Position dest)
 	isAbove = dest.getRow() > this->_pos.getRow() || dest.getCol() > this->_pos.getCol();
 	while (comp != this->_pos)
 	{
-		if (table[comp.getRow][comp.getCol()] != nullptr)
+		if (table[comp.getRow()][comp.getCol()] != nullptr)
 		{
 			/*
 			Piece x = table[comp.getRow][comp.getCol()].getColor();

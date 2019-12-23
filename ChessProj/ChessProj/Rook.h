@@ -3,13 +3,12 @@
 #include <string>
 #include "Piece.h"
 
-const int TABLE_SIZE = 8;
 using std::string;
 
 class Rook : public Piece
 {
 	protected:
-		bool _isMoved;
+		bool _isMoved;                          
 	public:
 
 		Rook(string color);

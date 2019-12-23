@@ -18,7 +18,7 @@ public:
 
 	static void castStrToPos(Position& src, Position& dest, string path);
 	const unsigned int getRow();
-	const unsigned int const getCol();
+	const unsigned int getCol();
 	void setRow(unsigned int row);
 	void setCol(unsigned int col);
 	bool operator ==(Position other);
