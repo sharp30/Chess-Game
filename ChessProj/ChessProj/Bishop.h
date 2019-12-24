@@ -7,10 +7,7 @@ using std::string;
 
 class Bishop : public Piece
 {
-protected:
-	bool _isMoved;
 public:
-
 	Bishop(string color, Position pos);
 	~Bishop();
 	//virtual void buildMoveOptions(const Piece*  board[][TABLE_SIZE]);

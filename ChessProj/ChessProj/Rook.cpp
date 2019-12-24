@@ -20,6 +20,7 @@ const bool Rook::isValidMove(const Piece* table[][TABLE_SIZE], Position dest)
 	bool row = this->_pos.getRow() == dest.getRow();
 	bool col = this->_pos.getCol() == dest.getCol();
 	bool isAbove = false;
+
 	Position comp(dest);
 	
 	if (!row && !col)
@@ -27,6 +28,8 @@ const bool Rook::isValidMove(const Piece* table[][TABLE_SIZE], Position dest)
 		return false;
 	}
 	isAbove = dest.getRow() > this->_pos.getRow() || dest.getCol() > this->_pos.getCol();
+
+	//check if the next positions in the way to destination are empty or not
 	while (comp != this->_pos)
 	{
 		if (table[comp.getRow()][comp.getCol()] != nullptr)

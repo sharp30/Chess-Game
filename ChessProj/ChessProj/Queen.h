@@ -8,11 +8,8 @@ using std::string;
 class Queen : public Piece
 {
 public:
-
 	Queen(string color, Position pos);
 	~Queen();
 	//virtual void buildMoveOptions(const Piece*  board[][TABLE_SIZE]);
 	virtual const bool isValidMove(const Piece* table[][TABLE_SIZE], Position dest);
-
-
 };

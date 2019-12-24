@@ -25,6 +25,7 @@ const bool Pawn::isValidMove(const Piece* table[][TABLE_SIZE], Position dest)
 	{
 		int maxSteps = this->_isMoved ? 1: 2;
 		return this->_pos.getRow() + maxSteps >= dest.getRow() && !table[dest.getRow()][dest.getCol()];
+		//#TODO: add a checking if all the positions in the way to the destination are empty
 	}
 	else if(abs((int)(this->_pos.getCol() -dest.getCol())) == 1)
 	{
