@@ -7,11 +7,11 @@
 using std::string;
 
 
-class Queen : public Piece
+class Knight : public Piece
 {
 public:
-	Queen(string color, Position pos);
-	~Queen();
+	Knight(string color, Position pos);
+	~Knight();
 	//virtual void buildMoveOptions(const Piece*  board[][TABLE_SIZE]);
 	virtual bool isValidMove(const Piece* table[][TABLE_SIZE], Position dest) const;
 };

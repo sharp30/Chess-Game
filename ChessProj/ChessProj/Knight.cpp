@@ -8,7 +8,7 @@ Knight::Knight(string color, Position pos):Piece(color,"Knight",pos)
 Knight::~Knight() = default;
 
 /*
-This function checks if the object can execute the move --- according to Queen's moving rules + if the path to dest is empty
+This function checks if the object can execute the move --- according to Knight's moving rules 
 Input:table -> the board of the game :: Piece* [][TABLE_SIZE]
 	  dest -> the destination to move to :: Position
 Output:Is the move valid? :: bool
