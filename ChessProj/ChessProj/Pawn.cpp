@@ -10,7 +10,7 @@ Pawn::~Pawn() = default;
 
 
 /*
-This function moves the piece from his previous location and changes the _isMoved value
+This function moves the piece from his previous location and changes the _isMoved value;
 Input:dest -> The new position of the piece
 Output:None
 */
@@ -36,7 +36,13 @@ const bool Pawn::isValidMove(const Piece* table[][TABLE_SIZE], Position dest)
 	if (this->_pos.getCol() == dest.getCol())// regular move 
 	{
 		int maxSteps = this->_isMoved ? 1: 2;
-		return this->_pos.getRow() + maxSteps >= dest.getRow() && !table[dest.getRow()][dest.getCol()];
+		bool isEmpty = true;
+		//check if the way to the destination is Empty
+		if (this->_pos.getCol() - dest.getCol() == 2)
+		{
+			isEmpty = !table[dest.getRow()][dest.getCol() - 1];
+		}
+		return isEmpty && this->_pos.getRow() + maxSteps >= dest.getRow() && !table[dest.getRow()][dest.getCol()];
 		//#TODO: add a checking if all the positions in the way to the destination are empty
 	}
 	else if(abs((int)(this->_pos.getCol() - dest.getCol())) == 1) //eating enemy piece in diagonal
