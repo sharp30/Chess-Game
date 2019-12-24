@@ -13,11 +13,11 @@ using std::endl;
 using std::string;
 
 
-void main1()
+void main()
 {
 	srand(time_t(NULL));
 	system("Start chessGraphics.exe");
-	//sleep(1000);
+	Sleep(1000);
 	
 	Pipe p;
 	bool isConnect = p.connect();
