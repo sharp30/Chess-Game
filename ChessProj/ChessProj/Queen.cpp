@@ -94,6 +94,68 @@ bool Queen::isValidMove(const Piece* table[][TABLE_SIZE], Position dest) const
 			}
 		}
 	}
+	else if (this->_pos.getCol() == dest.getCol()) // moving up or down in the same column
+	{
+		if (this->_pos.getRow() < dest.getRow()) // piece moving up
+		{
+			while (this->_pos != comp && isValid)
+			{
+				if (table[comp.getRow()][comp.getCol()] != nullptr) // not empty
+				{
+					isValid = false;
+				}
+				else
+				{
+					comp.setRow(comp.getRow() - 1);
+				}
+			}
+		}
+		else // piece moving down
+		{
+			while (this->_pos != comp && isValid)
+			{
+				if (table[comp.getRow()][comp.getCol()] != nullptr) // not empty
+				{
+					isValid = false;
+				}
+				else
+				{
+					comp.setRow(comp.getRow() + 1);
+				}
+			}
+		}
+	}
+	else if (this->_pos.getRow() == dest.getRow()) // moving right or left in the same row
+	{
+		if (this->_pos.getCol() < dest.getCol()) // piece moving right
+		{
+			while (this->_pos != comp && isValid)
+			{
+				if (table[comp.getRow()][comp.getCol()] != nullptr) // not empty
+				{
+					isValid = false;
+				}
+				else
+				{
+					comp.setCol(comp.getCol() - 1);
+				}
+			}
+		}
+		else // piece moving Left
+		{
+			while (this->_pos != comp && isValid)
+			{
+				if (table[comp.getRow()][comp.getCol()] != nullptr) // not empty
+				{
+					isValid = false;
+				}
+				else
+				{
+					comp.setCol(comp.getCol() + 1);
+				}
+			}
+		}
+	}
 
 	return isValid;
 }
