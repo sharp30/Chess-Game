@@ -161,13 +161,12 @@ bool Queen::isValidMove(const Piece* table[][TABLE_SIZE], Position dest) const
 }
 
 
-
-//check queen
-int main()
-{
-	Position p(0, 0);
-
-	Queen q("White", p);
-
-	return 0;
-}
+////check queen
+//int main()
+//{
+//	Position p(0, 0);
+//
+//	Queen q("White", p);
+//
+//	return 0;
+//}
