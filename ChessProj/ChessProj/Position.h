@@ -17,11 +17,12 @@ public:
 	Position(Position& pos); //copy c'tor
 
 	static void castStrToPos(Position& src, Position& dest, string path);
-	const unsigned int getRow();
-	const unsigned int getCol();
+	unsigned int getRow() const;
+	unsigned int getCol() const;
 	void setRow(unsigned int row);
 	void setCol(unsigned int col);
-	bool operator ==(Position other);
-	bool operator !=(Position other);
-
+	
+	bool operator == (Position other) const;
+	bool operator != (Position other) const;
+	void operator -= (const Position other);
 };

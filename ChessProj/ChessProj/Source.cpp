@@ -13,7 +13,7 @@ using std::endl;
 using std::string;
 
 
-void main()
+void main1()
 {
 	srand(time_t(NULL));
 	system("Start chessGraphics.exe");

@@ -36,12 +36,12 @@ void Position::castStrToPos(Position& src, Position& dest, string path)
 	dest.setRow(((int)path[3] - '0'));
 }
 
-const unsigned int Position::getRow()
+unsigned int Position::getRow() const
 {
 	return this->_row;
 }
 
-const unsigned int Position::getCol()
+unsigned int Position::getCol() const
 {
 	return this->_col;
 }
@@ -57,15 +57,23 @@ void Position::setCol(unsigned int col)
 }
 
 
-bool Position::operator ==(Position other)
+bool Position::operator == (Position other) const
 {
 	return this->_row == other._row && this->_col == other._col;
 }
 
 
-bool Position::operator !=(Position other)
+bool Position::operator != (Position other) const
 {
 	return !(*this == other);
+}
+
+// operator will substract position other from this position
+// #WARNING- might lead to negative position values which are not exist on the game board, use carefully 
+void Position::operator -= (const Position other)
+{
+	this->_row -= other._row;
+	this->_col -= other._col;
 }
 
 //main to check class Position

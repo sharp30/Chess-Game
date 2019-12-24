@@ -3,7 +3,10 @@
 #include <string>
 #include "Piece.h"
 
+
 using std::string;
+enum directions { UP_RIGHT, UP_LEFT, DOWN_LEFT, DOWN_RIGHT };
+
 
 class Queen : public Piece
 {
@@ -11,5 +14,5 @@ public:
 	Queen(string color, Position pos);
 	~Queen();
 	//virtual void buildMoveOptions(const Piece*  board[][TABLE_SIZE]);
-	virtual const bool isValidMove(const Piece* table[][TABLE_SIZE], Position dest);
+	virtual bool isValidMove(const Piece* table[][TABLE_SIZE], Position dest) const;
 };

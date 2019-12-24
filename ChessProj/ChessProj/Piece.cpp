@@ -18,12 +18,12 @@ Piece::Piece(string color, string type, Position pos) : _pos(pos)
 //----------------------------------------------------
 
 
-const string Piece::getType()
+string Piece::getType() const
 {
 	return this->_type;
 }
 
-const string Piece::getColor()
+string Piece::getColor() const
 {
 	return this->_color;
 }

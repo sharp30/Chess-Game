@@ -17,21 +17,21 @@ Output:Is the move valid? ::bool
 */
 const bool Pawn::isValidMove(const Piece* table[][TABLE_SIZE], Position dest)
 {
-	if (dest.getRow() <= this->_pos.getRow())
+	if (dest.getRow() <= this->_pos.getRow())// pawn can't move backwards
 	{
 		return false;
 	}
-	if (this->_pos.getCol() == dest.getCol())
+	if (this->_pos.getCol() == dest.getCol())// regular move 
 	{
 		int maxSteps = this->_isMoved ? 1: 2;
 		return this->_pos.getRow() + maxSteps >= dest.getRow() && !table[dest.getRow()][dest.getCol()];
 		//#TODO: add a checking if all the positions in the way to the destination are empty
 	}
-	else if(abs((int)(this->_pos.getCol() -dest.getCol())) == 1)
+	else if(abs((int)(this->_pos.getCol() - dest.getCol())) == 1) //eating enemy piece in diagonal
 	{
 		return table[dest.getRow()][dest.getCol()] != nullptr;
 		//because the checking about the piece color is happening in the Main checking function 
 	}
-	//check about en passment
+	//#TODO: check about en passment
 	return false;
 }
