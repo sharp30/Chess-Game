@@ -20,6 +20,7 @@ public:
 	Piece(string color, string type);
 	Piece(string color, string type, Position pos);
 	//virtual void buildMoveOptions(const Piece* board[][TABLE_SIZE]);
+	virtual void movePosition(Position dest);
 	string getType() const;
 	string getColor() const;
 	virtual bool isValidMove(const Piece* table[][TABLE_SIZE], Position dest) const = 0 ;

@@ -16,7 +16,15 @@ Piece::Piece(string color, string type, Position pos) : _pos(pos)
 }
 
 //----------------------------------------------------
-
+/*
+This function moves the piece from his previous location
+Input:dest -> The new position of the piece
+Output:None
+*/
+void Piece::movePosition(Position dest)
+{
+	this->_pos = dest;
+}
 
 string Piece::getType() const
 {

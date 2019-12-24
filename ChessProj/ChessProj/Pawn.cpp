@@ -10,6 +10,18 @@ Pawn::~Pawn() = default;
 
 
 /*
+This function moves the piece from his previous location and changes the _isMoved value
+Input:dest -> The new position of the piece
+Output:None
+*/
+void Pawn::movePosition(Position dest)
+{
+	this->_pos = dest;
+	this->_isMoved = true;
+}
+
+
+/*
 This function checks if the object can execute the move --- according to Pawn moving rules only!!!
 Input:table -> the board of the game ::Piece*[][TABLE_SIZE]
 	  dest -> the destination to move to :: Position
