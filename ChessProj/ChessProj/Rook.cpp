@@ -41,18 +41,10 @@ const bool Rook::isValidMove(const Piece* table[][TABLE_SIZE], Position dest)
 	}
 	isAbove = dest.getRow() > this->_pos.getRow() || dest.getCol() > this->_pos.getCol();
 
-	if (row)
-	{
-		comp.setRow(isAbove ? comp.getRow() - 1 : comp.getRow() + 1);
-	}
-	else
-	{
-		comp.setCol(isAbove ? comp.getCol() - 1 : comp.getCol() + 1);
-	}
 	//check if the next positions in the way to destination are empty or not
 	while (comp != this->_pos)
 	{
-		if (table[comp.getRow()][comp.getCol()] != nullptr)
+		if (table[comp.getRow()][comp.getCol()] != nullptr && comp != dest )
 		{
 			/*
 			for castling that will be added in the near future ASAP
