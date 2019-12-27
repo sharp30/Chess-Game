@@ -23,7 +23,7 @@ bool Bishop::isValidMove(const Piece* const table[][TABLE_SIZE], Position dest) 
 
 	Position comp(dest);
 
-	while (comp != this->_pos)
+	while (this->_pos != comp)
 	{
 		if (table[comp.getRow()][comp.getCol()] != nullptr && comp != dest)
 		{

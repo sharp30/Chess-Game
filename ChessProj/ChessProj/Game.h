@@ -27,7 +27,7 @@ EXPLANATION of movement errors:
 7- invalid move: src and dest are the same position
 8- valid move: a checkmate, GAME OVER!
 */
-enum movementErrors {VALID, VALID_MADE_CHESS, NO_PIECE_IN_SRC, BAD_PIECE_IN_DEST, FUTURE_CHESS_DANGER,
+enum movementErrors {VALID, VALID_MADE_CHESS, BAD_PIECE_IN_SRC, BAD_PIECE_IN_DEST, FUTURE_CHESS_DANGER,
 	INVALID_INDEXES, INVALID_PIECE_MOVE, SRC_EQUALS_DEST, VALID_CHECKMATE};
 
 
@@ -37,7 +37,7 @@ protected:
 	string _charsTable;
 	Piece* _table[TABLE_SIZE][TABLE_SIZE];
 
-	bool _turn; //0- white, 1- blue //maybe using enums???
+	bool _turn; //0- white, 1- black //maybe using enums???
 	bool _isChess;
 	bool _isMate;
 	int _movementCode; // number between 0 - 8, tells the frontend if the move is valid or not

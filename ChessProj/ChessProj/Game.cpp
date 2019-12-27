@@ -104,6 +104,34 @@ int Game::checkMove(Position src, Position dest) const
 {
 	int movementCode = VALID;
 
+	if (this->_table[src.getRow()][src.getCol()] != nullptr)
+	{
+		if (this->_table[src.getRow()][src.getCol()]->getColor().compare("white") == 0 && this->_turn ||
+			this->_table[src.getRow()][src.getCol()]->getColor().compare("black") == 0 && !this->_turn)
+		{
+			//if white piece in src and it is black's turn or
+			// black piece in src and it is white's turn 
+			movementCode = BAD_PIECE_IN_SRC;
+		}
+	}
+	else
+	{
+		//src position has nullptr in it
+		movementCode = BAD_PIECE_IN_SRC;
+	}
+
+
+	if (this->_table[dest.getRow()][dest.getCol()] != nullptr)
+	{
+		if (this->_table[dest.getRow()][dest.getCol()]->getColor().compare("white") == 0 && !this->_turn ||
+			this->_table[dest.getRow()][dest.getCol()]->getColor().compare("black") == 0 && this->_turn)
+		{
+			//if white piece in dest and it is white's turn or
+			// black piece in dest and it is black's turn 
+			movementCode = BAD_PIECE_IN_DEST;
+		}
+	}
+
 
 	if (!this->_table[src.getRow()][src.getCol()]->isValidMove(this->_table, dest))
 	{
