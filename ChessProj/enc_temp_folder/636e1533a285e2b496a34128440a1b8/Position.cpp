@@ -27,13 +27,13 @@ void Position::castStrToPos(Position& src, Position& dest, string path)
 	src.setCol(((int)path[0] - 'a'));
 
 	//second element
-	src.setRow(((int)path[1] - '1'));
+	src.setRow(((int)path[1] - '0'));
 
 	//third element
 	dest.setCol(((int)path[2] - 'a'));
 
 	//fourth element
-	dest.setRow(((int)path[3] - '1'));
+	dest.setRow(((int)path[3] - '0'));
 }
 
 unsigned int Position::getRow() const

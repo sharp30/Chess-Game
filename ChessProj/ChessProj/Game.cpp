@@ -46,26 +46,95 @@ void Game::manageGame()
 			return;
 		}
 	}
-
-
 	char msgToGraphics[1024];
+	strcpy_s(msgToGraphics, "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR0"); // just example...
+	string color ="";
+	Piece* created = nullptr;
+	Position pos(TABLE_SIZE, TABLE_SIZE);
+	bool colorCond;
+	char type = 'a';
+	//buildBoard
+	for (int i = 0; i <64; i++)
+	{
+		if (msgToGraphics[i] != '#')
+		{
+			color = msgToGraphics[i] >= 'a' ? "black" : "white";
+			pos.setCol(TABLE_SIZE - (i / TABLE_SIZE) -1);
+			pos.setRow(i % TABLE_SIZE);
+			type = tolower(msgToGraphics[i]);
+			switch (type)
+			{
+			case 'r':
+				created = new Rook(color, pos);
+				
+			case 'p':
+				created = new Pawn(color, pos);
+				break;			
+			case 'b':
+				created = new Bishop(color,pos);
+				break;			
+			case 'q':
+				created = new Queen(color, pos);
+				break;
+			case 'k':
+				created = new King(color, pos);
+				break;
+			case 'n':
+				created = new Knight(color, pos);
+				break;
+			default:
+				break;
+			}
+			this->_table[pos.getRow()][pos.getCol()] = created;
+			colorCond = color._Equal("black");
+			if (type == 'k')
+			{
+				this->_teams[colorCond].insert(this->_teams[colorCond].begin(), created);
+			}
+			else
+			{
+				this->_teams[colorCond].push_back(created);
+			}
+		}
+	}
+
 	// msgToGraphics should contain the board string accord the protocol
 	// YOUR CODE
 
-	strcpy_s(msgToGraphics, "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR1"); // just example...
 
 	p.sendMessageToGraphics(msgToGraphics);   // send the board string
 
 	// get message from graphics
 	string msgFromGraphics = p.getMessageFromGraphics();
-
+	Position src(TABLE_SIZE, TABLE_SIZE);
+	Position dest(TABLE_SIZE, TABLE_SIZE);
+	int resultMove = 0;
 	while (msgFromGraphics != "quit")
 	{
+		Position::castStrToPos(src, dest, msgFromGraphics);
+		resultMove = this->checkMove(src, dest);
+		if (resultMove == VALID)
+		{
+			movePiece(src, dest);
+			if (this->_isChess)
+			{
+				if (this->_isMate)
+				{
+					resultMove = VALID_CHECKMATE;
+
+				}
+				else
+				{
+					resultMove = VALID_MADE_CHESS;
+				}
+
+			}
+		}
 		// should handle the string the sent from graphics
 		// according the protocol. Ex: e2e4           (move e2 to e4)
 
 		// YOUR CODE
-		strcpy_s(msgToGraphics, "YOUR CODE"); // msgToGraphics should contain the result of the operation
+		strcpy_s(msgToGraphics,std::to_string(resultMove).c_str()); // msgToGraphics should contain the result of the operation
 
 
 		//////--Example of a Code msg building
@@ -73,8 +142,6 @@ void Game::manageGame()
 		////int r = rand() % 10; // just for debugging......
 		////msgToGraphics[0] = (char)(1 + '0');
 		////msgToGraphics[1] = 0;//null
-		
-
 		// return result to graphics		
 		p.sendMessageToGraphics(msgToGraphics);
 
@@ -92,6 +159,7 @@ output: none
 */
 void Game::movePiece(Position src,Position dest)
 {
+	bool canOtherTeamMove = true;
 	Piece* removed = this->_table[dest.getRow()][dest.getCol()];
 	Piece* added = this->_table[src.getRow()][src.getCol()];
 	if (removed != nullptr)
@@ -103,11 +171,18 @@ void Game::movePiece(Position src,Position dest)
 	added->movePosition(dest);
 	this->_table[dest.getRow()][dest.getCol()] = added;
 	this->_table[src.getRow()][src.getCol()] = nullptr;
+	canOtherTeamMove = canMove();
 	if (added->isValidMove(this->_table,this->_teams[!this->_turn][0]->getPos()))
 	{
 		this->_isChess = true;
-		checkMate;
+		this->_isMate = !canOtherTeamMove;
 	}
+	/*else
+	{
+		_isPat = !canOtherTeamMove;
+	}
+	*/
+
 }
 
 /*
@@ -198,6 +273,8 @@ void Game::checkMate()
 {
 
 }
+
+
 bool Game::canMove()// const //TODO:AFTER changing checkMove const add here
 {
 	//run on all squares on 
@@ -208,9 +285,12 @@ bool Game::canMove()// const //TODO:AFTER changing checkMove const add here
 		{
 			for (int col = 0; i < TABLE_SIZE; i++)
 			{
-				if(this->checkMove(this->_teams[!this->_turn][i]->getPos(),Position(row,col))
+				if (this->checkMove(this->_teams[!this->_turn][i]->getPos(), Position(row, col)))
 				{
 					return false;
 				}
-	return true;;
+			}
+		}
+	}
+	return true;
 }

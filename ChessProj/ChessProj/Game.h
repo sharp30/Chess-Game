@@ -6,6 +6,7 @@
 #include "Queen.h"
 #include "Rook.h"
 #include "King.h"
+#include "Knight.h"
 #include "Pipe.h"
 #include <iostream>
 #include <thread>
