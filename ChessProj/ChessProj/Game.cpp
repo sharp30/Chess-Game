@@ -178,11 +178,20 @@ int Game::checkMove(Position src, Position dest) //const
 //
 //}
 /*
-This function checks if th
+This function checks if the action that has recently permofed will cause a chess on the team
+Input:None
+Output:will a chess be performed :: bool
 */
 bool Game::checkChess() const
 {
-
+	for (int i = 0; i <this->_teams[!this->_turn].size(); i++)
+	{
+		if (this->_teams[!this->_turn][i]->isValidMove(this->_table, this->_teams[this->_turn][0]->getPos()))
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 void Game::checkMate()
