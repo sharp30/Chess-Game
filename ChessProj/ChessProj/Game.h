@@ -43,8 +43,8 @@ protected:
 	int _movementCode; // number between 0 - 8, tells the frontend if the move is valid or not
 	vector<Piece*> _teams[2];
 	
-	void movePiece(Position src,Position dest); // path- the string from the frontend (example - "e2e4")
-	int checkMove(Position src, Position dest);//const;
+	void movePiece(Position src,Position dest); 
+	int checkMove(Position src, Position dest);//const; #TODO : fix this const problem (because of checkChess)
 
 	//bool checkMove(string path) const; // path- the string from the frontend (example - "e2e4")  
 	//void movePiece(Position src, Position dest);
