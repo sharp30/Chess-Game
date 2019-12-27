@@ -98,19 +98,20 @@ void Game::movePiece(string path)
 /*
 This function checks if the object can execute the move --- after all tests!!!
 input: the path of the piece movement
-output: none
+output: the movement code that will be sent to the frontend
 */
-bool Game::checkMove(Position src, Position dest) const
+int Game::checkMove(Position src, Position dest) const
 {
-	bool isValid = true;
+	int movementCode = VALID;
+
 
 	if (!this->_table[src.getRow()][src.getCol()]->isValidMove(this->_table, dest))
 	{
-		isValid = false;
+		movementCode = INVALID_PIECE_MOVE;
 	}
 	//else if ()
 
-	return isValid;
+	return movementCode;
 }
 
 void Game::checkChess()

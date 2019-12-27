@@ -45,7 +45,7 @@ protected:
 	vector<Piece*> _black;
 	
 	void movePiece(string path); // path- the string from the frontend (example - "e2e4")
-	bool checkMove(Position src, Position dest) const;
+	int checkMove(Position src, Position dest) const;
 	
 	//bool checkMove(string path) const; // path- the string from the frontend (example - "e2e4")  
 	//void movePiece(Position src, Position dest);
