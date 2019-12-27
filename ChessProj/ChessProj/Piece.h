@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <vector>
 #include "Position.h"
@@ -8,7 +9,8 @@ using std::cin;
 
 const int TABLE_SIZE = 8;
 
-class Piece {
+class Piece 
+{
 protected:
 	
 	string _type;

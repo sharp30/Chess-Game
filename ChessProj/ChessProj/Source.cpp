@@ -15,6 +15,8 @@ using std::string;
 
 void main()
 {
+	Game g("1234");
+	system("pause");
 	srand(time_t(NULL));
 	system("Start chessGraphics.exe");
 	Sleep(1000);

@@ -1,5 +1,6 @@
 #include "Game.h"
 
+
 Game::Game(string initBoard)
 {
 	this->charsTable = initBoard;
@@ -15,3 +16,10 @@ Game::Game(string initBoard)
 		}
 	}
 }
+
+Game:: ~Game() = default;
+
+void Game::manageGame()
+{
+}
+

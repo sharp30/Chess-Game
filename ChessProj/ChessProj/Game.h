@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Piece.h"
 #include "Bishop.h"
 #include "Pawn.h"
@@ -8,9 +10,10 @@
 #include <iostream>
 #include <thread>
 #include <vector>
+#include <string>
 
 using std::vector;
-
+using std::string;
 class Game
 {
 protected:
