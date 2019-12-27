@@ -198,3 +198,19 @@ void Game::checkMate()
 {
 
 }
+bool Game::canMove()// const //TODO:AFTER changing checkMove const add here
+{
+	//run on all squares on 
+	for (int i = 0; i < this->_teams[!this->_turn].size(); i++)
+	{
+		//run on all squares on table
+		for (int row = 0; i < TABLE_SIZE; i++)
+		{
+			for (int col = 0; i < TABLE_SIZE; i++)
+			{
+				if(this->checkMove(this->_teams[!this->_turn][i]->getPos(),Position(row,col))
+				{
+					return false;
+				}
+	return true;;
+}

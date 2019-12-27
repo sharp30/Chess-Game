@@ -52,7 +52,7 @@ protected:
 	//void copyBoard(Piece* [][TABLE_SIZE]);
 	bool checkChess() const;
 	void checkMate();
-
+	bool canMove();
 public:
 	Game(string initBoard);
 	~Game();
