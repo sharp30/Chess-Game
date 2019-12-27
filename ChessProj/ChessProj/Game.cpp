@@ -104,6 +104,11 @@ int Game::checkMove(Position src, Position dest) const
 {
 	int movementCode = VALID;
 
+	if (src == dest)
+	{
+		//src are the same spot as dest
+		return SRC_EQUALS_DEST;
+	}
 	if (this->_table[src.getRow()][src.getCol()] != nullptr)
 	{
 		if (this->_table[src.getRow()][src.getCol()]->getColor().compare("white") == 0 && this->_turn ||
@@ -111,13 +116,13 @@ int Game::checkMove(Position src, Position dest) const
 		{
 			//if white piece in src and it is black's turn or
 			// black piece in src and it is white's turn 
-			movementCode = BAD_PIECE_IN_SRC;
+			return BAD_PIECE_IN_SRC;
 		}
 	}
 	else
 	{
 		//src position has nullptr in it
-		movementCode = BAD_PIECE_IN_SRC;
+		return BAD_PIECE_IN_SRC;
 	}
 
 
@@ -128,16 +133,17 @@ int Game::checkMove(Position src, Position dest) const
 		{
 			//if white piece in dest and it is white's turn or
 			// black piece in dest and it is black's turn 
-			movementCode = BAD_PIECE_IN_DEST;
+			return BAD_PIECE_IN_DEST;
 		}
 	}
 
 
 	if (!this->_table[src.getRow()][src.getCol()]->isValidMove(this->_table, dest))
 	{
-		movementCode = INVALID_PIECE_MOVE;
+		return INVALID_PIECE_MOVE;
 	}
-	//else if ()
+
+	
 
 	return movementCode;
 }

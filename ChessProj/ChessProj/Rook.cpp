@@ -27,7 +27,7 @@ Input:table -> the board of the game ::Piece*[][TABLE_SIZE]
 	  dest -> the destination to move to :: Position\
 Output:Is the move valid? ::bool
 */
-bool Rook::isValidMove(const Piece* const table[][TABLE_SIZE], Position dest) const
+bool Rook::isValidMove( Piece* const table[][TABLE_SIZE], Position dest) const
 {
 	bool row = this->_pos.getRow() == dest.getRow();
 	bool col = this->_pos.getCol() == dest.getCol();

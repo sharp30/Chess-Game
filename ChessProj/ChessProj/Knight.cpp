@@ -13,7 +13,7 @@ Input:table -> the board of the game :: Piece* [][TABLE_SIZE]
 	  dest -> the destination to move to :: Position
 Output:Is the move valid? :: bool
 */
-bool Knight::isValidMove(const Piece* const table[][TABLE_SIZE], Position dest) const
+bool Knight::isValidMove( Piece* const table[][TABLE_SIZE], Position dest) const
 {
 	int disRow = abs((int)(this->_pos.getRow() - dest.getRow()));
 	int disCol = abs((int)(this->_pos.getCol() - dest.getCol()));

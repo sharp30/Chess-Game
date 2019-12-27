@@ -11,5 +11,5 @@ public:
 	Bishop(string color, Position pos);
 	~Bishop();
 	//virtual void buildMoveOptions(const Piece*  board[][TABLE_SIZE]);
-	virtual bool isValidMove(const Piece* const table[][TABLE_SIZE], Position dest) const;
+	virtual bool isValidMove( Piece* const table[][TABLE_SIZE], Position dest) const;
 };
