@@ -13,7 +13,7 @@ using std::endl;
 using std::string;
 
 
-void main()
+int main()
 {
 	Game g("1234");
 	system("pause");
@@ -79,4 +79,6 @@ void main()
 	}
 
 	p.close();
+
+	return 0;
 }

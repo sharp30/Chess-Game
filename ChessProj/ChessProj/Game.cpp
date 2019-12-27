@@ -21,5 +21,6 @@ Game:: ~Game() = default;
 
 void Game::manageGame()
 {
+
 }
 
