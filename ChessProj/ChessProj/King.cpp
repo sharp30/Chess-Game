@@ -1,7 +1,7 @@
 #include "King.h"
 #include <cmath>
 
-//constractor of Pawn
+//constractor of King
 King::King(string color, Position pos) :Piece(color, "King", pos)
 {
 	_isMoved = false;
@@ -22,4 +22,15 @@ const bool King::isValidMove(const Piece * table[][TABLE_SIZE], Position dest)
 
 
 	return isValid;
+}
+
+/*
+This function moves the piece from his previous location and changes the _isMoved value
+Input:dest -> The new position of the piece
+Output:None
+*/
+void King::movePosition(Position dest)
+{
+	this->_pos = dest;
+	this->_isMoved = true;
 }

@@ -21,7 +21,7 @@ bool Queen::isValidMove(const Piece* table[][TABLE_SIZE], Position dest) const
 	bool isValid = true;
 	Position comp(dest);
 
-	if (this->_pos.getCol() == dest.getCol() && this->_pos.getRow() == dest.getRow()) // destination is the current position
+	if (this->_pos.getCol() == dest.getCol() && this->_pos.getRow() == dest.getRow()) // destination is the current position 
 	{
 		isValid = false;
 	}

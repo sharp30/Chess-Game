@@ -10,6 +10,18 @@ Rook::Rook(string color, Position pos) : Piece(color,"Rook",pos)
 Rook::~Rook() = default;
 
 /*
+This function moves the piece from his previous location and changes the _isMoved value
+Input:dest -> The new position of the piece
+Output:None
+*/
+void Rook::movePosition(Position dest)
+{
+	this->_pos = dest;
+	this->_isMoved = true;
+}
+
+
+/*
 This function checks if the object can execute the move --- according to rook moving rules only!!!
 Input:table -> the board of the game ::Piece*[][TABLE_SIZE]
 	  dest -> the destination to move to :: Position\
@@ -32,9 +44,10 @@ const bool Rook::isValidMove(const Piece* table[][TABLE_SIZE], Position dest)
 	//check if the next positions in the way to destination are empty or not
 	while (comp != this->_pos)
 	{
-		if (table[comp.getRow()][comp.getCol()] != nullptr)
+		if (table[comp.getRow()][comp.getCol()] != nullptr && comp != dest )
 		{
 			/*
+			for castling that will be added in the near future ASAP
 			Piece x = table[comp.getRow][comp.getCol()].getColor();
 			if(!(_isMoved == false && x.getColor() == this->getColor && x.getType("king)))
 			*/

@@ -14,5 +14,6 @@ public:
 	King(string color, Position pos);
 	~King();
 	//virtual void buildMoveOptions(const Piece*  board[][TABLE_SIZE]);
+	virtual void movePosition(Position dest);
 	virtual const bool isValidMove(const Piece* table[][TABLE_SIZE], Position dest);
 };

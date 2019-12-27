@@ -7,7 +7,7 @@ in order to read and write information from and to the Backend
 #include "Pipe.h"
 #include <iostream>
 #include <thread>
-
+#include "Game.h"
 using std::cout;
 using std::endl;
 using std::string;
@@ -15,6 +15,8 @@ using std::string;
 
 void main()
 {
+	Game g("1234");
+	system("pause");
 	srand(time_t(NULL));
 	system("Start chessGraphics.exe");
 	Sleep(1000);
