@@ -21,6 +21,7 @@ public:
 	unsigned int getCol() const;
 	void setRow(unsigned int row);
 	void setCol(unsigned int col);
+	bool isAround(Position p) const;
 	
 	bool operator == (Position other) const;
 	bool operator != (Position other) const;

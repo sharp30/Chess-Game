@@ -56,6 +56,29 @@ void Position::setCol(unsigned int col)
 	this->_col = col;
 }
 
+/*
+the function will check if a position is around another position (like the king's rules of movment):
+EXAMPLE:
+1  2  3
+4  -  5
+6  7  8
+# all of the numbers are around the '-' signs
+*/
+bool Position::isAround(Position p) const
+{
+	bool isAround = false;
+	if ((this->_row + 1 == p._row && this->_col == p._col) || (this->_row - 1 == p._row && this->_col == p._col))
+		isAround = true; // moving directions are 2 or 7 (in the example at the description)
+	else if ((this->_col + 1 == p._col && this->_row == p._row) || (this->_col - 1 == p._col && this->_row == p._row))
+		isAround = true; // moving directions are 4 or 5 (in the example at the description) 
+	else if ((this->_col - 1 == p._col && this->_row - 1 == p._row) || (this->_col + 1 == p._col && this->_row + 1 == p._row))
+		isAround = true; // moving directions are 3 or 6 (in the example at the description)
+	else if ((this->_col - 1 == p._col && this->_row + 1 == p._row) || (this->_col + 1 == p._col && this->_row - 1 == p._row))
+		isAround = true; // moving directions are 1 or 8 (in the example at the description)
+	
+	return isAround;
+}
+
 
 bool Position::operator == (Position other) const
 {

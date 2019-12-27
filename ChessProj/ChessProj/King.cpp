@@ -19,7 +19,10 @@ const bool King::isValidMove(const Piece * table[][TABLE_SIZE], Position dest)
 {
 	bool isValid = true;
 
-
+	if (!this->_pos.isAround(dest))
+	{
+		isValid = false;
+	}
 
 	return isValid;
 }
