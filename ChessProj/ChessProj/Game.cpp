@@ -59,8 +59,8 @@ void Game::manageGame()
 		if (msgToGraphics[i] != '#')
 		{
 			color = msgToGraphics[i] >= 'a' ? "black" : "white";
-			pos.setCol(TABLE_SIZE - (i / TABLE_SIZE) -1);
-			pos.setRow(i % TABLE_SIZE);
+			pos.setRow(TABLE_SIZE - (i / TABLE_SIZE) -1);
+			pos.setCol(i % TABLE_SIZE);
 			type = tolower(msgToGraphics[i]);
 			switch (type)
 			{
@@ -95,6 +95,11 @@ void Game::manageGame()
 			{
 				this->_teams[colorCond].push_back(created);
 			}
+		}
+		else
+		{
+			this->_table[pos.getRow()][pos.getCol()] = nullptr;
+
 		}
 	}
 
