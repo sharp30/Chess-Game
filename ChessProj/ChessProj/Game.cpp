@@ -87,12 +87,27 @@ void Game::manageGame()
 
 /*
 the function will move the piece to it's new position on the board
-input: the path of the piece movement (4 chars - "e2e4" for example)
+input: The source position of the piece, the Destination position of the piece
 output: none
 */
-void Game::movePiece(string path)
+void Game::movePiece(Position src,Position dest)
 {
-	
+	Piece* removed = this->_table[dest.getRow()][dest.getCol()];
+	Piece* added = this->_table[src.getRow()][src.getCol()];
+	if (removed != nullptr)
+	{
+		//remove from vector
+		this->_teams[!this->_turn].erase(std::find(this->_teams[!this->_turn].begin(), this->_teams[!this->_turn].end(), removed));
+		delete removed;
+	}
+	added->movePosition(dest);
+	this->_table[dest.getRow()][dest.getCol()] = added;
+	this->_table[src.getRow()][src.getCol()] = nullptr;
+	if (added->isValidMove(this->_table,this->_teams[!this->_turn][0]->getPos()))
+	{
+		this->_isChess = true;
+		checkMate;
+	}
 }
 
 /*
@@ -142,16 +157,21 @@ int Game::checkMove(Position src, Position dest) const
 	{
 		return INVALID_PIECE_MOVE;
 	}
-
-	
+	//check if the move doesn't leads to chess
+	if (!checkChess)
+	{
+		return VALID_CHECKMATE;
+	}
 
 	return movementCode;
 }
 
-void Game::checkChess()
+bool Game::checkChess() const
 {
+
 }
 
 void Game::checkMate()
 {
+
 }

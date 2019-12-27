@@ -7,7 +7,7 @@ Position::Position(unsigned int row, int col)
 	this->setRow(row);
 }
 
-Position::Position(Position& pos)
+Position::Position(const Position& pos)
 {
 	this->setCol(pos.getCol());
 	this->setRow(pos.getRow());

@@ -35,3 +35,8 @@ string Piece::getColor() const
 {
 	return this->_color;
 }
+
+Position Piece::getPos() 
+{
+	return this->_pos;
+}

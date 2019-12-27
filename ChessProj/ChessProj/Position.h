@@ -14,7 +14,7 @@ protected:
 
 public:
 	Position(unsigned int row, int col);
-	Position(Position& pos); //copy c'tor
+	Position(const Position& pos); //copy c'tor
 
 	static void castStrToPos(Position& src, Position& dest, string path);
 	unsigned int getRow() const;

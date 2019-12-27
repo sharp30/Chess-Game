@@ -41,16 +41,15 @@ protected:
 	bool _isChess;
 	bool _isMate;
 	int _movementCode; // number between 0 - 8, tells the frontend if the move is valid or not
-	vector<Piece*> _white;
-	vector<Piece*> _black;
+	vector<Piece*> _teams[2];
 	
-	void movePiece(string path); // path- the string from the frontend (example - "e2e4")
-	int checkMove(Position src, Position dest) const;
+	void movePiece(Position src,Position dest); // path- the string from the frontend (example - "e2e4")
+	int checkMove(Position src, Position dest);
 	
 	//bool checkMove(string path) const; // path- the string from the frontend (example - "e2e4")  
 	//void movePiece(Position src, Position dest);
 
-	void checkChess();
+	bool checkChess() const;
 	void checkMate();
 
 public:
