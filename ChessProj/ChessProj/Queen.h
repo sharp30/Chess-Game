@@ -14,5 +14,5 @@ public:
 	Queen(string color, Position pos);
 	~Queen();
 	//virtual void buildMoveOptions(const Piece*  board[][TABLE_SIZE]);
-	virtual bool isValidMove(const Piece* table[][TABLE_SIZE], Position dest) const;
+	virtual bool isValidMove(const Piece* const table[][TABLE_SIZE], Position dest) const;
 };

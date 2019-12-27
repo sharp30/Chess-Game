@@ -1,18 +1,17 @@
 #include "Game.h"
 
-
 Game::Game(string initBoard)
 {
-	this->charsTable = initBoard;
-	this->isChess = false;
-	this->isMate = false; 
-	this->turn = false;
+	this->_charsTable = initBoard;
+	this->_isChess = false;
+	this->_isMate = false; 
+	this->_turn = false;
 
 	for (int i = 0; i < 8; i++)
 	{
 		for (int j = 0; j < 8; j++)
 		{
-			this->table[i][j] = nullptr;
+			this->_table[i][j] = nullptr;
 		}
 	}
 }
@@ -68,12 +67,13 @@ void Game::manageGame()
 		// YOUR CODE
 		strcpy_s(msgToGraphics, "YOUR CODE"); // msgToGraphics should contain the result of the operation
 
-		/******* JUST FOR EREZ DEBUGGING ******/
-		int r = rand() % 10; // just for debugging......
-		msgToGraphics[0] = (char)(1 + '0');
-		msgToGraphics[1] = 0;
-		/******* JUST FOR EREZ DEBUGGING ******/
 
+		//////--Example of a Code msg building
+		//////--structure - 'char- code number', 'null'
+		////int r = rand() % 10; // just for debugging......
+		////msgToGraphics[0] = (char)(1 + '0');
+		////msgToGraphics[1] = 0;//null
+		
 
 		// return result to graphics		
 		p.sendMessageToGraphics(msgToGraphics);
@@ -85,3 +85,38 @@ void Game::manageGame()
 	p.close();
 }
 
+/*
+the function will move the piece to it's new position on the board
+input: the path of the piece movement (4 chars - "e2e4" for example)
+output: none
+*/
+void Game::movePiece(string path)
+{
+	
+}
+
+/*
+This function checks if the object can execute the move --- after all tests!!!
+input: the path of the piece movement
+output: none
+*/
+bool Game::checkMove(Position src, Position dest) const
+{
+	bool isValid = true;
+
+	if (!this->_table[src.getRow()][src.getCol()]->isValidMove(this->_table, dest))
+	{
+		isValid = false;
+	}
+	//else if ()
+
+	return isValid;
+}
+
+void Game::checkChess()
+{
+}
+
+void Game::checkMate()
+{
+}

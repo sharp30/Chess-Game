@@ -27,7 +27,7 @@ Input:table -> the board of the game ::Piece*[][TABLE_SIZE]
 	  dest -> the destination to move to :: Position
 Output:Is the move valid? ::bool
 */
-const bool Pawn::isValidMove(const Piece* table[][TABLE_SIZE], Position dest)
+bool Pawn::isValidMove(const Piece* const table[][TABLE_SIZE], Position dest) const
 {
 	if (dest.getRow() <= this->_pos.getRow())// pawn can't move backwards
 	{

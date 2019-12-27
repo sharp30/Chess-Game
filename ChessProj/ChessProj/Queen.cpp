@@ -16,7 +16,7 @@ Input:table -> the board of the game :: Piece* [][TABLE_SIZE]
 	  dest -> the destination to move to :: Position
 Output:Is the move valid? :: bool
 */
-bool Queen::isValidMove(const Piece* table[][TABLE_SIZE], Position dest) const
+bool Queen::isValidMove(const Piece* const table[][TABLE_SIZE], Position dest) const
 {
 	bool isValid = true;
 	Position comp(dest);

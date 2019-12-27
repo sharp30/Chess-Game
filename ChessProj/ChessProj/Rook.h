@@ -14,5 +14,5 @@ public:
 	~Rook();
 	//virtual void buildMoveOptions(const Piece*  board[][TABLE_SIZE]);
 	virtual void movePosition(Position dest);
-	virtual const bool isValidMove(const Piece* table[][TABLE_SIZE], Position dest); 
+	virtual bool isValidMove(const Piece* const table[][TABLE_SIZE], Position dest) const;
 };

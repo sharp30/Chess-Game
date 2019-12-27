@@ -27,7 +27,7 @@ Input:table -> the board of the game ::Piece*[][TABLE_SIZE]
 	  dest -> the destination to move to :: Position\
 Output:Is the move valid? ::bool
 */
-const bool Rook::isValidMove(const Piece* table[][TABLE_SIZE], Position dest)
+bool Rook::isValidMove(const Piece* const table[][TABLE_SIZE], Position dest) const
 {
 	bool row = this->_pos.getRow() == dest.getRow();
 	bool col = this->_pos.getCol() == dest.getCol();
@@ -42,7 +42,7 @@ const bool Rook::isValidMove(const Piece* table[][TABLE_SIZE], Position dest)
 	isAbove = dest.getRow() > this->_pos.getRow() || dest.getCol() > this->_pos.getCol();
 
 	//check if the next positions in the way to destination are empty or not
-	while (comp != this->_pos)
+	while (this->_pos != comp)
 	{
 		if (table[comp.getRow()][comp.getCol()] != nullptr && comp != dest )
 		{

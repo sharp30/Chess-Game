@@ -25,5 +25,5 @@ public:
 	virtual void movePosition(Position dest);
 	string getType() const;
 	string getColor() const;
-	virtual bool isValidMove(const Piece* table[][TABLE_SIZE], Position dest) const = 0 ;
+	virtual bool isValidMove(const Piece* const table[][TABLE_SIZE], Position dest) const = 0 ;
 };
