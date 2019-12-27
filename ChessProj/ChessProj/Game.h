@@ -44,11 +44,12 @@ protected:
 	vector<Piece*> _teams[2];
 	
 	void movePiece(Position src,Position dest); // path- the string from the frontend (example - "e2e4")
-	int checkMove(Position src, Position dest);
-	
+	int checkMove(Position src, Position dest);//const;
+
 	//bool checkMove(string path) const; // path- the string from the frontend (example - "e2e4")  
 	//void movePiece(Position src, Position dest);
 
+	//void copyBoard(Piece* [][TABLE_SIZE]);
 	bool checkChess() const;
 	void checkMate();
 

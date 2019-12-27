@@ -112,10 +112,10 @@ void Game::movePiece(Position src,Position dest)
 
 /*
 This function checks if the object can execute the move --- after all tests!!!
-input: the path of the piece movement
+input: The source position of the piece, the Destination position of the piece
 output: the movement code that will be sent to the frontend
 */
-int Game::checkMove(Position src, Position dest) const
+int Game::checkMove(Position src, Position dest) //const
 {
 	int movementCode = VALID;
 
@@ -140,7 +140,6 @@ int Game::checkMove(Position src, Position dest) const
 		return BAD_PIECE_IN_SRC;
 	}
 
-
 	if (this->_table[dest.getRow()][dest.getCol()] != nullptr)
 	{
 		if (this->_table[dest.getRow()][dest.getCol()]->getColor().compare("white") == 0 && !this->_turn ||
@@ -158,14 +157,29 @@ int Game::checkMove(Position src, Position dest) const
 		return INVALID_PIECE_MOVE;
 	}
 	//check if the move doesn't leads to chess
-	if (!checkChess)
+	
+	Piece* tmp = this->_table[dest.getRow()][dest.getCol()];
+	this->_table[dest.getRow()][dest.getCol()] = this->_table[src.getRow()][src.getCol()];
+	this->_table[src.getRow()][src.getCol()] = nullptr;
+	//#TODO change inner destination
+	if (this->checkChess())
 	{
-		return VALID_CHECKMATE;
+		movementCode = FUTURE_CHESS_DANGER;
 	}
+	this->_table[src.getRow()][src.getCol()] = this->_table[dest.getRow()][dest.getCol()];
+	this->_table[dest.getRow()][dest.getCol()] = tmp;
 
 	return movementCode;
 }
 
+// COPY TO a new board
+//void Game::copyBoard(Piece* [][TABLE_SIZE])
+//{
+//
+//}
+/*
+This function checks if th
+*/
 bool Game::checkChess() const
 {
 
