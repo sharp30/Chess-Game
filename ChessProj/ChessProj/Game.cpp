@@ -48,13 +48,13 @@ void Game::manageGame()
 	}
 	char msgToGraphics[1024];
 	strcpy_s(msgToGraphics, "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR0"); // just example...
-	string color ="";
+	string color = "";
 	Piece* created = nullptr;
 	Position pos(TABLE_SIZE, TABLE_SIZE);
 	bool colorCond;
 	char type = 'a';
 	//buildBoard
-	for (int i = 0; i <64; i++)
+	for (int i = 0; i < TABLE_SIZE * TABLE_SIZE; i++)
 	{
 		if (msgToGraphics[i] != '#')
 		{
