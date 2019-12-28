@@ -46,9 +46,9 @@ bool Queen::isValidMove(Piece* const table[][TABLE_SIZE], Position dest) const
 			}
 			else // direction - UP_LEFT
 			{
-				while (comp != dest && this->_pos != comp && isValid)
+				while (this->_pos != comp && isValid)
 				{
-					if (table[comp.getRow()][comp.getCol()] != nullptr) // not empty
+					if (comp != dest && table[comp.getRow()][comp.getCol()] != nullptr) // not empty
 					{
 						isValid = false;
 					}
@@ -155,6 +155,10 @@ bool Queen::isValidMove(Piece* const table[][TABLE_SIZE], Position dest) const
 				}
 			}
 		}
+	}
+	else
+	{
+		isValid = false;
 	}
 
 	return isValid;
