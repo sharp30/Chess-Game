@@ -133,22 +133,15 @@ void Game::manageGame()
 
 			}
 
-			this->_turn = !this->_turn; //switch player in backend
+			this->_turn = !this->_turn; //switch player in backend.
 			//until the end of the while loop we shouldn't use the value of turn.
 		}
-		// should handle the string the sent from graphics
+		// should handle the string sent from graphics
 		// according the protocol. Ex: e2e4           (move e2 to e4)
 
 		// YOUR CODE
 		strcpy_s(msgToGraphics,std::to_string(resultMove).c_str()); // msgToGraphics should contain the result of the operation
 
-
-		//////--Example of a Code msg building
-		//////--structure - 'char- code number', 'null'
-		////int r = rand() % 10; // just for debugging......
-		////msgToGraphics[0] = (char)(1 + '0');
-		////msgToGraphics[1] = 0;//null
-		// return result to graphics
 		
 		//sends the error code to the graphics
 		p.sendMessageToGraphics(msgToGraphics);
@@ -179,10 +172,11 @@ void Game::movePiece(Position src,Position dest)
 	added->movePosition(dest);
 	this->_table[dest.getRow()][dest.getCol()] = added;
 	this->_table[src.getRow()][src.getCol()] = nullptr;
-	canOtherTeamMove = canMove();
-	if (added->isValidMove(this->_table,this->_teams[!this->_turn][0]->getPos()))//check if the moving piece threatning
-		//on the king
+	
+	if (added != nullptr && added->isValidMove(this->_table,this->_teams[!this->_turn][0]->getPos())) 
+		//check if the moving piece threatning the king
 	{
+		canOtherTeamMove = canMove();
 		this->_isChess = true;
 		this->_isMate = !canOtherTeamMove;
 	}
@@ -261,6 +255,9 @@ int Game::checkMove(Position src, Position dest) //const
 //{
 //
 //}
+
+
+
 /*
 This function checks if the action that has recently permofed will cause a chess on the team
 Input:None
@@ -294,9 +291,9 @@ bool Game::canMove()// const //TODO:AFTER changing checkMove const add here
 	for (int i = 0; i < this->_teams[!this->_turn].size(); i++)
 	{
 		//run on all squares on table
-		for (int row = 0; i < TABLE_SIZE; i++) // maybe should be row++
+		for (int row = 0; row < TABLE_SIZE; row++) // maybe should be row++
 		{
-			for (int col = 0; i < TABLE_SIZE; i++) // maybe should be col++
+			for (int col = 0; col < TABLE_SIZE; col++) // maybe should be col++
 			{
 				if (this->checkMove(this->_teams[!this->_turn][i]->getPos(), Position(row, col)))
 				{
@@ -307,26 +304,3 @@ bool Game::canMove()// const //TODO:AFTER changing checkMove const add here
 	}
 	return true;
 }
-
-
-//another option of canMove()- maybe use it ?
-
-//bool Game::canMove()// const //TODO:AFTER changing checkMove const add here
-//{
-//	//run on all squares on 
-//	for (int i = 0; i < this->_teams[!this->_turn].size(); i++)
-//	{
-//		//run on all squares on table
-//		for (int row = 0; row < TABLE_SIZE; row++) // maybe should be row++
-//		{
-//			for (int col = 0; col < TABLE_SIZE; col++) // maybe should be col++
-//			{
-//				if (this->checkMove(this->_teams[!this->_turn][i]->getPos(), Position(row, col)))
-//				{
-//					return false;
-//				}
-//			}
-//		}
-//	}
-//	return true;
-//}
