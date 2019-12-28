@@ -47,9 +47,6 @@ protected:
 	void movePiece(Position src,Position dest); 
 	int checkMove(Position src, Position dest);//const; #TODO : fix this const problem (because of checkChess)
 
-	//bool checkMove(string path) const; // path- the string from the frontend (example - "e2e4")  
-	//void movePiece(Position src, Position dest);
-
 	//void copyBoard(Piece* [][TABLE_SIZE]);
 	bool checkChess() const;
 	void checkMate();

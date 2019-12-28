@@ -126,7 +126,6 @@ void Game::manageGame()
 				if (this->_isMate)
 				{
 					resultMove = VALID_CHECKMATE;
-
 				}
 				else
 				{
@@ -177,7 +176,8 @@ void Game::movePiece(Position src,Position dest)
 	this->_table[dest.getRow()][dest.getCol()] = added;
 	this->_table[src.getRow()][src.getCol()] = nullptr;
 	canOtherTeamMove = canMove();
-	if (added->isValidMove(this->_table,this->_teams[!this->_turn][0]->getPos()))
+	if (added->isValidMove(this->_table,this->_teams[!this->_turn][0]->getPos()))//check if the moving piece threatning
+		//on the king
 	{
 		this->_isChess = true;
 		this->_isMate = !canOtherTeamMove;
@@ -279,16 +279,39 @@ void Game::checkMate()
 
 }
 
-
+/*
+the function will check if any piece of the attacking team can make any movement
+input: none
+output: if any piece of the attacking team can make any movement
+*/
+//bool Game::canMove()// const //TODO:AFTER changing checkMove const add here
+//{
+//	//run on all squares on 
+//	for (int i = 0; i < this->_teams[!this->_turn].size(); i++)
+//	{
+//		//run on all squares on table
+//		for (int row = 0; i < TABLE_SIZE; i++) // maybe should be row++
+//		{
+//			for (int col = 0; i < TABLE_SIZE; i++) // maybe should be col++
+//			{
+//				if (this->checkMove(this->_teams[!this->_turn][i]->getPos(), Position(row, col)))
+//				{
+//					return false;
+//				}
+//			}
+//		}
+//	}
+//	return true;
+//}
 bool Game::canMove()// const //TODO:AFTER changing checkMove const add here
 {
 	//run on all squares on 
 	for (int i = 0; i < this->_teams[!this->_turn].size(); i++)
 	{
 		//run on all squares on table
-		for (int row = 0; i < TABLE_SIZE; i++)
+		for (int row = 0; row < TABLE_SIZE; row++) // maybe should be row++
 		{
-			for (int col = 0; i < TABLE_SIZE; i++)
+			for (int col = 0; col < TABLE_SIZE; col++) // maybe should be col++
 			{
 				if (this->checkMove(this->_teams[!this->_turn][i]->getPos(), Position(row, col)))
 				{
