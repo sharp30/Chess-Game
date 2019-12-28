@@ -29,8 +29,8 @@ Output:Is the move valid? ::bool
 */
 bool Pawn::isValidMove( Piece* const table[][TABLE_SIZE], Position dest) const
 {
-	if (dest.getRow() <= this->_pos.getRow() && this->_color.compare("white") ||
-		dest.getRow() > this->_pos.getRow() && this->_color.compare("black"))// pawn can't move backwards
+	if (dest.getRow() <= this->_pos.getRow() && this->_color.compare("white") == 0 ||
+		dest.getRow() > this->_pos.getRow() && this->_color.compare("black") == 0)// pawn can't move backwards
 	{
 		return false;
 	}
@@ -38,13 +38,21 @@ bool Pawn::isValidMove( Piece* const table[][TABLE_SIZE], Position dest) const
 	{
 		int maxSteps = this->_isMoved ? 1: 2;
 		bool isEmpty = true;
+
 		//check if the way to the destination is Empty
-		if (this->_pos.getCol() - dest.getCol() == 2)
+		if (abs((int)(this->_pos.getCol() - dest.getCol())) == 2)
 		{
 			isEmpty = !table[dest.getRow()][dest.getCol() - 1];
 		}
-		return isEmpty && this->_pos.getRow() + maxSteps >= dest.getRow() && !table[dest.getRow()][dest.getCol()];
-		//#TODO: add a checking if all the positions in the way to the destination are empty
+		if (this->_color.compare("white") == 0)
+		{
+			return isEmpty && this->_pos.getRow() + maxSteps >= dest.getRow() && !table[dest.getRow()][dest.getCol()];
+		}
+		else
+		{
+			return isEmpty && this->_pos.getRow() - maxSteps <= dest.getRow() && !table[dest.getRow()][dest.getCol()];
+		}
+		
 	}
 	else if(abs((int)(this->_pos.getRow() - dest.getRow())) == 1 && 
 		abs((int)(this->_pos.getCol() - dest.getCol())) == 1) //eating enemy piece in diagonal
