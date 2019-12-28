@@ -7,9 +7,9 @@ Game::Game(string initBoard)
 	this->_isMate = false; 
 	this->_turn = false;
 
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < TABLE_SIZE; i++)
 	{
-		for (int j = 0; j < 8; j++)
+		for (int j = 0; j < TABLE_SIZE; j++)
 		{
 			this->_table[i][j] = nullptr;
 		}
@@ -46,67 +46,21 @@ void Game::manageGame()
 			return;
 		}
 	}
+
 	char msgToGraphics[1024];
-	strcpy_s(msgToGraphics, "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR0"); // just example...
-	string color = "";
-	Piece* created = nullptr;
-	Position pos(TABLE_SIZE, TABLE_SIZE);
-	bool colorCond;
-	char type = 'a';
-	//buildBoard
-	for (int i = 0; i < TABLE_SIZE * TABLE_SIZE; i++)
-	{
-		if (msgToGraphics[i] != '#')
-		{
-			color = msgToGraphics[i] >= 'a' ? "black" : "white";
-			pos.setRow(TABLE_SIZE - (i / TABLE_SIZE) -1);
-			pos.setCol(i % TABLE_SIZE);
-			type = tolower(msgToGraphics[i]);
-			switch (type)
-			{
-			case 'r':
-				created = new Rook(color, pos);
-				
-			case 'p':
-				created = new Pawn(color, pos);
-				break;			
-			case 'b':
-				created = new Bishop(color,pos);
-				break;			
-			case 'q':
-				created = new Queen(color, pos);
-				break;
-			case 'k':
-				created = new King(color, pos);
-				break;
-			case 'n':
-				created = new Knight(color, pos);
-				break;
-			default:
-				break;
-			}
-			this->_table[pos.getRow()][pos.getCol()] = created;
-			colorCond = color._Equal("black");
-			if (type == 'k')
-			{
-				this->_teams[colorCond].insert(this->_teams[colorCond].begin(), created);
-			}
-			else
-			{
-				this->_teams[colorCond].push_back(created);
-			}
-		}
-		else
-		{
-			this->_table[pos.getRow()][pos.getCol()] = nullptr;
-		}
-	}
+	strcpy_s(msgToGraphics, this->_charsTable.c_str());
+	buildGameBoard(msgToGraphics);
 
 	// msgToGraphics should contain the board string accord the protocol
 	// YOUR CODE
 
 
 	p.sendMessageToGraphics(msgToGraphics);   // send the board string
+
+
+	//erase this line- just for debugging!:
+	printBoard();
+
 
 	// get message from graphics
 	string msgFromGraphics = p.getMessageFromGraphics();
@@ -145,6 +99,9 @@ void Game::manageGame()
 		
 		//sends the error code to the graphics
 		p.sendMessageToGraphics(msgToGraphics);
+
+		//erase this line- just for debugging!:
+		printBoard();
 
 		// get message from graphics
 		msgFromGraphics = p.getMessageFromGraphics();
@@ -303,4 +260,93 @@ bool Game::canMove()// const //TODO:AFTER changing checkMove const add here
 		}
 	}
 	return true;
+}
+
+/*
+the function will build the board of the backend
+input: the way the board should be built
+output: none
+*/
+void Game::buildGameBoard(char* gameBoardStr)
+{
+	string color = "";
+	Piece* created = nullptr;
+	Position pos(TABLE_SIZE, TABLE_SIZE);
+	bool colorCond;
+	char type = 'a';
+	//buildBoard
+	for (int i = 0; i < TABLE_SIZE * TABLE_SIZE; i++)
+	{
+		//std::cout << TABLE_SIZE - (i / TABLE_SIZE) - 1 << "," << i % TABLE_SIZE << std::endl;
+		pos.setRow(TABLE_SIZE - (i / TABLE_SIZE) - 1);
+		pos.setCol(i % TABLE_SIZE);
+		if (gameBoardStr[i] != '#')
+		{
+			color = gameBoardStr[i] >= 'a' ? "black" : "white";
+
+			type = tolower(gameBoardStr[i]);
+			switch (type)
+			{
+			case 'r':
+				created = new Rook(color, pos);
+				break;
+			case 'p':
+				created = new Pawn(color, pos);
+				break;
+			case 'b':
+				created = new Bishop(color, pos);
+				break;
+			case 'q':
+				created = new Queen(color, pos);
+				break;
+			case 'k':
+				created = new King(color, pos);
+				break;
+			case 'n':
+				created = new Knight(color, pos);
+				break;
+			default:
+				break;
+			}
+			this->_table[pos.getRow()][pos.getCol()] = created;
+			colorCond = color._Equal("black");
+			if (type == 'k')
+			{
+				this->_teams[colorCond].insert(this->_teams[colorCond].begin(), created);
+			}
+			else
+			{
+				this->_teams[colorCond].push_back(created);
+			}
+		}
+		else
+		{
+			this->_table[pos.getRow()][pos.getCol()] = nullptr;
+		}
+	}
+}
+
+
+/*
+the function will print the board in the command line
+input: none
+output: none
+*/
+void Game::printBoard() const
+{
+	int i = 0, j = 0;
+
+	std::cout << std::endl;
+	for (i = 0; i < TABLE_SIZE; i++)
+	{
+		std::cout << "-";
+		for (j = 0; j < TABLE_SIZE; j++)
+		{
+			if (this->_table[i][j] != nullptr)
+				std::cout << this->_table[i][j]->getType() << "-";
+			else
+				std::cout << "null" << "-";
+		}
+		std::cout << std::endl;
+	}
 }

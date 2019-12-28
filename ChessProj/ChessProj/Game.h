@@ -51,6 +51,9 @@ protected:
 	bool checkChess() const;
 	void checkMate();
 	bool canMove();
+
+	void printBoard() const;
+	void buildGameBoard(char* gameBoardStr);
 public:
 	Game(string initBoard);
 	~Game();
