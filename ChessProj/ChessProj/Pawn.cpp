@@ -29,7 +29,8 @@ Output:Is the move valid? ::bool
 */
 bool Pawn::isValidMove( Piece* const table[][TABLE_SIZE], Position dest) const
 {
-	if (dest.getRow() <= this->_pos.getRow())// pawn can't move backwards
+	if (dest.getRow() <= this->_pos.getRow() && this->_color.compare("white") ||
+		dest.getRow() > this->_pos.getRow() && this->_color.compare("black"))// pawn can't move backwards
 	{
 		return false;
 	}
