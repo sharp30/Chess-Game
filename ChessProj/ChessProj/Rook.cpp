@@ -53,7 +53,7 @@ bool Rook::isValidMove( Piece* const table[][TABLE_SIZE], Position dest) const
 			*/
 			return false;
 		}
-		if (row)
+		if (col)
 		{
 			comp.setRow(isAbove ? comp.getRow() - 1 : comp.getRow() + 1);
 		}
