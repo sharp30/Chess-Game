@@ -148,7 +148,9 @@ void Game::manageGame()
 		////int r = rand() % 10; // just for debugging......
 		////msgToGraphics[0] = (char)(1 + '0');
 		////msgToGraphics[1] = 0;//null
-		// return result to graphics		
+		// return result to graphics
+		
+		//sends the error code to the graphics
 		p.sendMessageToGraphics(msgToGraphics);
 
 		// get message from graphics
