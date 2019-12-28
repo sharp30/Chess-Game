@@ -197,12 +197,14 @@ int Game::checkMove(Position src, Position dest) //const
 
 	this->_table[dest.getRow()][dest.getCol()] = this->_table[src.getRow()][src.getCol()];
 	this->_table[src.getRow()][src.getCol()] = nullptr;
-
-	//#TODO change inner destination
+	this->_table[dest.getRow()][dest.getCol()]->movePosition(dest);
+	//#TODO vector of pieces according to the checking
 	if (this->checkChess())
 	{
 		movementCode = FUTURE_CHESS_DANGER;
 	}
+
+	this->_table[dest.getRow()][dest.getCol()]->movePosition(src);
 	this->_table[src.getRow()][src.getCol()] = this->_table[dest.getRow()][dest.getCol()];
 	this->_table[dest.getRow()][dest.getCol()] = tmp;
 
