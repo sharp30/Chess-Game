@@ -99,7 +99,6 @@ void Game::manageGame()
 		else
 		{
 			this->_table[pos.getRow()][pos.getCol()] = nullptr;
-
 		}
 	}
 
@@ -133,6 +132,9 @@ void Game::manageGame()
 				}
 
 			}
+
+			this->_turn = !this->_turn; //switch player in backend
+			//until the end of the while loop we shouldn't use the value of turn.
 		}
 		// should handle the string the sent from graphics
 		// according the protocol. Ex: e2e4           (move e2 to e4)
@@ -284,34 +286,15 @@ the function will check if any piece of the attacking team can make any movement
 input: none
 output: if any piece of the attacking team can make any movement
 */
-//bool Game::canMove()// const //TODO:AFTER changing checkMove const add here
-//{
-//	//run on all squares on 
-//	for (int i = 0; i < this->_teams[!this->_turn].size(); i++)
-//	{
-//		//run on all squares on table
-//		for (int row = 0; i < TABLE_SIZE; i++) // maybe should be row++
-//		{
-//			for (int col = 0; i < TABLE_SIZE; i++) // maybe should be col++
-//			{
-//				if (this->checkMove(this->_teams[!this->_turn][i]->getPos(), Position(row, col)))
-//				{
-//					return false;
-//				}
-//			}
-//		}
-//	}
-//	return true;
-//}
 bool Game::canMove()// const //TODO:AFTER changing checkMove const add here
 {
 	//run on all squares on 
 	for (int i = 0; i < this->_teams[!this->_turn].size(); i++)
 	{
 		//run on all squares on table
-		for (int row = 0; row < TABLE_SIZE; row++) // maybe should be row++
+		for (int row = 0; i < TABLE_SIZE; i++) // maybe should be row++
 		{
-			for (int col = 0; col < TABLE_SIZE; col++) // maybe should be col++
+			for (int col = 0; i < TABLE_SIZE; i++) // maybe should be col++
 			{
 				if (this->checkMove(this->_teams[!this->_turn][i]->getPos(), Position(row, col)))
 				{
@@ -322,3 +305,26 @@ bool Game::canMove()// const //TODO:AFTER changing checkMove const add here
 	}
 	return true;
 }
+
+
+//another option of canMove()- maybe use it ?
+
+//bool Game::canMove()// const //TODO:AFTER changing checkMove const add here
+//{
+//	//run on all squares on 
+//	for (int i = 0; i < this->_teams[!this->_turn].size(); i++)
+//	{
+//		//run on all squares on table
+//		for (int row = 0; row < TABLE_SIZE; row++) // maybe should be row++
+//		{
+//			for (int col = 0; col < TABLE_SIZE; col++) // maybe should be col++
+//			{
+//				if (this->checkMove(this->_teams[!this->_turn][i]->getPos(), Position(row, col)))
+//				{
+//					return false;
+//				}
+//			}
+//		}
+//	}
+//	return true;
+//}
