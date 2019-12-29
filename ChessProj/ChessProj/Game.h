@@ -45,15 +45,17 @@ protected:
 	vector<Piece*> _teams[2];
 	
 	void movePiece(Position src,Position dest); 
-	int checkMove(Position src, Position dest);//const; #TODO : fix this const problem (because of checkChess)
+	int checkMove(Position src, Position dest) const;
 
 	//void copyBoard(Piece* [][TABLE_SIZE]);
 	bool checkFutureChess(Position src, Position dest) const;
 	bool checkChess() const;
-	void checkMate();
-	bool canMove();
+	bool checkChess(vector<Piece*> teams[], Piece* const table[][TABLE_SIZE]) const;
+	void checkMate() const;
+	bool canMove() const;
 
-	void copyGameTable(Piece* dest[][TABLE_SIZE]) const;
+	void copyGameTableByVal(Piece* dest[][TABLE_SIZE]) const;
+	void copyGameTableByAdd(Piece* dest[][TABLE_SIZE]) const;
 	void printBoard() const;
 	void buildGameBoard(char* gameBoardStr);
 public:

@@ -152,7 +152,7 @@ This function checks if the object can execute the move --- after all tests!!!
 input: The source position of the piece, the Destination position of the piece
 output: the movement code that will be sent to the frontend
 */
-int Game::checkMove(Position src, Position dest) //const
+int Game::checkMove(Position src, Position dest) const
 {
 	int movementCode = VALID;
 
@@ -221,7 +221,26 @@ bool Game::checkChess() const
 	return false;
 }
 
-void Game::checkMate()
+
+/*
+This function checks if the action that has recently permofed will cause a chess on the team
+Input: the game table to be checked
+Output: will a chess be performed :: bool
+*/
+bool Game::checkChess(vector<Piece*> teams[], Piece* const table[][TABLE_SIZE]) const
+{
+	for (int i = 0; i < teams[!this->_turn].size(); i++)
+	{
+		if (teams[!this->_turn][i]->isValidMove(table, teams[this->_turn][0]->getPos()))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+
+void Game::checkMate() const
 {
 
 }
@@ -233,7 +252,7 @@ output: if any piece of the team that being attacked can make any movement
 ++++++true: it can move
 ------false: it can't move
 */
-bool Game::canMove()// const //TODO:AFTER changing checkMove const add here
+bool Game::canMove() const //TODO:AFTER changing checkMove const add here
 {
 	//run on all squares on 
 	for (int i = 0; i < this->_teams[!this->_turn].size(); i++)
@@ -350,34 +369,59 @@ output: true or false if the next move will cause the attacking team to self-che
 */
 bool Game::checkFutureChess(Position src, Position dest) const
 {
+	vector<Piece*> teams[2];
 	bool isFutureChess = false;
 	Piece* cTable[TABLE_SIZE][TABLE_SIZE];
-	Piece* temp = this->_table[dest.getRow()][dest.getCol()];
+	
+	teams[0] = this->_teams[0];
+	teams[1] = this->_teams[1];
 
-	copyGameTable(cTable);
+	copyGameTableByAdd(cTable);
 
-	cTable[dest.getRow()][dest.getCol()] = this->_table[src.getRow()][src.getCol()];
+	Piece* removed = cTable[dest.getRow()][dest.getCol()];
+	Piece* added = cTable[src.getRow()][src.getCol()];
+	
+	if (removed != nullptr)
+	{
+		//remove from vector
+		teams[!this->_turn].erase(std::find(teams[!this->_turn].begin(), teams[!this->_turn].end(), removed));
+	}
+
+	added->movePosition(dest);
+	cTable[dest.getRow()][dest.getCol()] = added;
 	cTable[src.getRow()][src.getCol()] = nullptr;
-	cTable[dest.getRow()][dest.getCol()]->movePosition(dest);
-	//#TODO vector of pieces according to the checking
-	if (this->checkChess())
+
+	if (this->checkChess(teams, cTable))
 	{
 		isFutureChess = true;
 	}
+	
+	added->movePosition(src);
+	//cleaning-------------------
+	teams[0].clear();
+	teams[1].clear();
 
-	cTable[dest.getRow()][dest.getCol()]->movePosition(src);
-	cTable[src.getRow()][src.getCol()] = this->_table[dest.getRow()][dest.getCol()];
-	cTable[dest.getRow()][dest.getCol()] = temp;
+	/*for (int i = 0; i < TABLE_SIZE; i++)
+	{
+		for (int j = 0; j < TABLE_SIZE; j++)
+		{
+			if (cTable[i][j] != nullptr)
+			{
+				delete cTable[i][j];
+			}
+		}
+	}*/
+	//----------------------------
 
 	return isFutureChess;
 }
 
 /*
-the function will copy a table
+the function will copy a table by values (create new pieces)
 input: the src and dest of the copy
 output: none
 */
-void Game::copyGameTable(Piece* dest[][TABLE_SIZE]) const
+void Game::copyGameTableByVal(Piece* dest[][TABLE_SIZE]) const
 {
 	Piece* created = nullptr;
 
@@ -389,31 +433,47 @@ void Game::copyGameTable(Piece* dest[][TABLE_SIZE]) const
 			{
 				created = nullptr;
 			}
-			else if (this->_table[i][j]->getType()._Equal("rook"))
+			else if (this->_table[i][j]->getType().compare("Rook") == 0)
 			{
 				created = new Rook(this->_table[i][j]->getColor(), this->_table[i][j]->getPos());
 			}
-			else if (this->_table[i][j]->getType()._Equal("pawn"))
+			else if (this->_table[i][j]->getType().compare("Pawn") == 0)
 			{
 				created = new Pawn(this->_table[i][j]->getColor(), this->_table[i][j]->getPos());
 			}
-			else if (this->_table[i][j]->getType()._Equal("bishop"))
+			else if (this->_table[i][j]->getType().compare("Bishop") == 0)
 			{
 				created = new Bishop(this->_table[i][j]->getColor(), this->_table[i][j]->getPos());
 			}
-			else if (this->_table[i][j]->getType()._Equal("queen"))
+			else if (this->_table[i][j]->getType().compare("Queen") == 0)
 			{
 				created = new Queen(this->_table[i][j]->getColor(), this->_table[i][j]->getPos());
 			}
-			else if (this->_table[i][j]->getType()._Equal("king"))
+			else if (this->_table[i][j]->getType().compare("King") == 0)
 			{
 				created = new King(this->_table[i][j]->getColor(), this->_table[i][j]->getPos());
 			}
-			else if (this->_table[i][j]->getType()._Equal("knight"))
+			else if (this->_table[i][j]->getType().compare("Knight") == 0)
 			{
 				created = new Knight(this->_table[i][j]->getColor(), this->_table[i][j]->getPos());
 			}
 			dest[i][j] = created;
+		}
+	}
+}
+
+/*
+the function will copy a table by addresses (copy the addresses)
+input: the src and dest of the copy
+output: none
+*/
+void Game::copyGameTableByAdd(Piece* dest[][TABLE_SIZE]) const
+{
+	for (int i = 0; i < TABLE_SIZE; i++)
+	{
+		for (int j = 0; j < TABLE_SIZE; j++)
+		{
+			dest[i][j] = this->_table[i][j];
 		}
 	}
 }
