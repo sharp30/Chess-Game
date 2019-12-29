@@ -48,10 +48,12 @@ protected:
 	int checkMove(Position src, Position dest);//const; #TODO : fix this const problem (because of checkChess)
 
 	//void copyBoard(Piece* [][TABLE_SIZE]);
+	bool checkFutureChess(Position src, Position dest) const;
 	bool checkChess() const;
 	void checkMate();
 	bool canMove();
 
+	void copyGameTable(Piece* dest[][TABLE_SIZE]) const;
 	void printBoard() const;
 	void buildGameBoard(char* gameBoardStr);
 public:

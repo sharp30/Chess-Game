@@ -130,10 +130,12 @@ void Game::movePiece(Position src,Position dest)
 	this->_table[dest.getRow()][dest.getCol()] = added;
 	this->_table[src.getRow()][src.getCol()] = nullptr;
 	
-	if (added != nullptr && added->isValidMove(this->_table,this->_teams[!this->_turn][0]->getPos())) 
+	if (added != nullptr && added->isValidMove(this->_table, this->_teams[!this->_turn][0]->getPos())) 
 		//check if the moving piece threatning the king
 	{
-		canOtherTeamMove = canMove(); //$$$
+		//#TODO: checking if any piece can move is not enough. checking if the 
+		//       king can be protected should be added. Only if it can't, it is a mate.
+		canOtherTeamMove = canMove();
 		this->_isChess = true;
 		this->_isMate = !canOtherTeamMove;
 	}
@@ -186,37 +188,20 @@ int Game::checkMove(Position src, Position dest) //const
 		}
 	}
 
-
 	if (!this->_table[src.getRow()][src.getCol()]->isValidMove(this->_table, dest))
 	{
 		return INVALID_PIECE_MOVE;
 	}
-	//check if the move doesn't leads to chess
 	
-	Piece* tmp = this->_table[dest.getRow()][dest.getCol()];
-
-	this->_table[dest.getRow()][dest.getCol()] = this->_table[src.getRow()][src.getCol()];
-	this->_table[src.getRow()][src.getCol()] = nullptr;
-	this->_table[dest.getRow()][dest.getCol()]->movePosition(dest);
-	//#TODO vector of pieces according to the checking
-	if (this->checkChess())
+	
+	//check if the move doesn't leads to chess
+	if (this->checkFutureChess(src, dest))
 	{
 		movementCode = FUTURE_CHESS_DANGER;
 	}
 
-	this->_table[dest.getRow()][dest.getCol()]->movePosition(src);
-	this->_table[src.getRow()][src.getCol()] = this->_table[dest.getRow()][dest.getCol()];
-	this->_table[dest.getRow()][dest.getCol()] = tmp;
-
 	return movementCode;
 }
-
-// COPY TO a new board
-//void Game::copyBoard(Piece* [][TABLE_SIZE])
-//{
-//
-//}
-
 
 
 /*
@@ -242,9 +227,11 @@ void Game::checkMate()
 }
 
 /*
-the function will check if any piece of the attacking team can make any movement
+the function will check if any piece of the team that being attacked can make any movement
 input: none
 output: if any piece of the team that being attacked can make any movement
+++++++true: it can move
+------false: it can't move
 */
 bool Game::canMove()// const //TODO:AFTER changing checkMove const add here
 {
@@ -258,12 +245,12 @@ bool Game::canMove()// const //TODO:AFTER changing checkMove const add here
 			{
 				if (this->checkMove(this->_teams[!this->_turn][i]->getPos(), Position(row, col)))
 				{
-					return false;
+					return true;
 				}
 			}
 		}
 	}
-	return true;
+	return false;
 }
 
 /*
@@ -352,5 +339,81 @@ void Game::printBoard() const
 				std::cout << "null" << "-";
 		}
 		std::cout << std::endl;
+	}
+}
+
+
+/*
+the function will check if the next move will cause the attacking team to self-chess
+input: The source position of the piece, the Destination position of the piece
+output: true or false if the next move will cause the attacking team to self-chess
+*/
+bool Game::checkFutureChess(Position src, Position dest) const
+{
+	bool isFutureChess = false;
+	Piece* cTable[TABLE_SIZE][TABLE_SIZE];
+	Piece* temp = this->_table[dest.getRow()][dest.getCol()];
+
+	copyGameTable(cTable);
+
+	cTable[dest.getRow()][dest.getCol()] = this->_table[src.getRow()][src.getCol()];
+	cTable[src.getRow()][src.getCol()] = nullptr;
+	cTable[dest.getRow()][dest.getCol()]->movePosition(dest);
+	//#TODO vector of pieces according to the checking
+	if (this->checkChess())
+	{
+		isFutureChess = true;
+	}
+
+	cTable[dest.getRow()][dest.getCol()]->movePosition(src);
+	cTable[src.getRow()][src.getCol()] = this->_table[dest.getRow()][dest.getCol()];
+	cTable[dest.getRow()][dest.getCol()] = temp;
+
+	return isFutureChess;
+}
+
+/*
+the function will copy a table
+input: the src and dest of the copy
+output: none
+*/
+void Game::copyGameTable(Piece* dest[][TABLE_SIZE]) const
+{
+	Piece* created = nullptr;
+
+	for (int i = 0; i < TABLE_SIZE; i++)
+	{
+		for (int j = 0; j < TABLE_SIZE; j++)
+		{
+			if (this->_table[i][j] == nullptr)
+			{
+				created = nullptr;
+			}
+			else if (this->_table[i][j]->getType()._Equal("rook"))
+			{
+				created = new Rook(this->_table[i][j]->getColor(), this->_table[i][j]->getPos());
+			}
+			else if (this->_table[i][j]->getType()._Equal("pawn"))
+			{
+				created = new Pawn(this->_table[i][j]->getColor(), this->_table[i][j]->getPos());
+			}
+			else if (this->_table[i][j]->getType()._Equal("bishop"))
+			{
+				created = new Bishop(this->_table[i][j]->getColor(), this->_table[i][j]->getPos());
+			}
+			else if (this->_table[i][j]->getType()._Equal("queen"))
+			{
+				created = new Queen(this->_table[i][j]->getColor(), this->_table[i][j]->getPos());
+			}
+			else if (this->_table[i][j]->getType()._Equal("king"))
+			{
+				created = new King(this->_table[i][j]->getColor(), this->_table[i][j]->getPos());
+			}
+			else if (this->_table[i][j]->getType()._Equal("knight"))
+			{
+				created = new Knight(this->_table[i][j]->getColor(), this->_table[i][j]->getPos());
+			}
+			dest[i][j] = created;
+		}
 	}
 }
