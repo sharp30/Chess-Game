@@ -139,11 +139,12 @@ void Game::movePiece(Position src,Position dest)
 		this->_isChess = true;
 		this->_isMate = !canOtherTeamMove;
 	}
-	/*else
+	else
 	{
-		_isPat = !canOtherTeamMove;
+		this->_isChess = false;
+		this->_isMate = false;
+		//_isPat = !canOtherTeamMove;
 	}
-	*/
 
 }
 
@@ -397,21 +398,12 @@ bool Game::checkFutureChess(Position src, Position dest) const
 	}
 	
 	added->movePosition(src);
+	
 	//cleaning-------------------
 	teams[0].clear();
 	teams[1].clear();
-
-	/*for (int i = 0; i < TABLE_SIZE; i++)
-	{
-		for (int j = 0; j < TABLE_SIZE; j++)
-		{
-			if (cTable[i][j] != nullptr)
-			{
-				delete cTable[i][j];
-			}
-		}
-	}*/
-	//----------------------------
+	//do not clean cTable because it contains the addresses of the main table
+	//---------------------------
 
 	return isFutureChess;
 }
