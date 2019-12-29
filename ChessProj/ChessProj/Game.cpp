@@ -5,7 +5,7 @@ Game::Game(string initBoard)
 	this->_charsTable = initBoard;
 	this->_isChess = false;
 	this->_isMate = false; 
-	this->_turn = true;
+	this->_turn = false;
 
 	for (int i = 0; i < TABLE_SIZE; i++)
 	{
@@ -204,6 +204,46 @@ int Game::checkMove(Position src, Position dest) const
 	return movementCode;
 }
 
+/*
+This function checks if the object can execute the move --- after all tests!!! 
+input: The piece to be checked (mustn't be nullptr), the Destination position of the piece
+output: the movement code that will be sent to the frontend
+*/
+int Game::checkMove(Piece* piece, Position dest) const
+{
+	int movementCode = VALID;
+
+	if (piece->getPos() == dest)
+	{
+		//src are the same spot as dest
+		return SRC_EQUALS_DEST;
+	}
+	if (this->_table[dest.getRow()][dest.getCol()] != nullptr)
+	{
+		if (this->_table[dest.getRow()][dest.getCol()]->getColor().compare("white") == 0 && piece->getColor()._Equal("white") ||
+			this->_table[dest.getRow()][dest.getCol()]->getColor().compare("black") == 0 && piece->getColor()._Equal("black"))
+		{
+			//if white piece in dest and it is white's turn or
+			// black piece in dest and it is black's turn 
+			return BAD_PIECE_IN_DEST;
+		}
+	}
+
+	if (piece->isValidMove(this->_table, dest))
+	{
+		return INVALID_PIECE_MOVE;
+	}
+
+
+	//check if the move doesn't leads to chess
+	if (this->checkFutureChess(piece, dest))
+	{
+		movementCode = FUTURE_CHESS_DANGER;
+	}
+
+	return movementCode;
+}
+
 
 /*
 This function checks if the action that has recently permofed will cause a chess on the team
@@ -263,7 +303,7 @@ bool Game::canMove() const //TODO:AFTER changing checkMove const add here
 		{
 			for (int col = 0; col < TABLE_SIZE; col++)
 			{
-				if (this->checkMove(this->_teams[!this->_turn][i]->getPos(), Position(row, col)))
+				if (this->checkMove(this->_teams[!this->_turn][i], Position(row, col)) == VALID)
 				{
 					return true;
 				}
@@ -399,6 +439,56 @@ bool Game::checkFutureChess(Position src, Position dest) const
 	
 	added->movePosition(src);
 	
+	//cleaning-------------------
+	teams[0].clear();
+	teams[1].clear();
+	//do not clean cTable because it contains the addresses of the main table
+	//---------------------------
+
+	return isFutureChess;
+}
+
+
+/*
+the function will check if the next move will cause the attacking team to self-chess
+input: The piece to be checked, the Destination position of the piece
+output: true or false if the next move will cause the attacking team to self-chess
+*/
+bool Game::checkFutureChess(Piece* piece, Position dest) const
+{
+	vector<Piece*> teams[2];
+	bool isFutureChess = false;
+	Piece* cTable[TABLE_SIZE][TABLE_SIZE];
+	Position src = piece->getPos();
+
+	teams[0] = this->_teams[0];
+	teams[1] = this->_teams[1];
+
+	copyGameTableByAdd(cTable);
+
+	Piece* removed = cTable[dest.getRow()][dest.getCol()];
+	Piece* added = piece;
+
+	if (removed != nullptr)
+	{
+		//remove from vector
+		if (piece->getColor()._Equal("white"))
+			teams[1].erase(std::find(teams[1].begin(), teams[1].end(), removed));
+		else
+			teams[0].erase(std::find(teams[0].begin(), teams[0].end(), removed));
+	}
+
+	added->movePosition(dest);
+	cTable[dest.getRow()][dest.getCol()] = added;
+	cTable[piece->getPos().getRow()][piece->getPos().getCol()] = nullptr;
+
+	if (this->checkChess(teams, cTable))
+	{
+		isFutureChess = true;
+	}
+
+	added->movePosition(src);
+
 	//cleaning-------------------
 	teams[0].clear();
 	teams[1].clear();
