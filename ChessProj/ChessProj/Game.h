@@ -46,8 +46,6 @@ protected:
 	
 	void movePiece(Position src,Position dest);
 	int checkMove(bool validPieceTeam, Position src, Position dest) const;
-
-	int checkMove(Position src, Position dest) const;
 	int checkMove(Piece* piece, Position dest) const;
 
 
@@ -55,7 +53,6 @@ protected:
 	bool checkFutureChess(Piece* piece, Position dest) const;
 	bool checkChess() const;
 	bool checkChess(bool team,vector<Piece*> teams[], Piece* const table[][TABLE_SIZE]) const;
-	void checkMate() const;
 	bool canMove(bool team) const;
 
 	void copyGameTableByVal(Piece* dest[][TABLE_SIZE]) const;

@@ -59,7 +59,7 @@ void Game::manageGame()
 
 
 	//erase this line- just for debugging!:
-	printBoard();
+	//printBoard();
 
 
 	// get message from graphics
@@ -101,7 +101,7 @@ void Game::manageGame()
 		p.sendMessageToGraphics(msgToGraphics);
 
 		//erase this line- just for debugging!:
-		printBoard();
+		//printBoard();
 
 		// get message from graphics
 		msgFromGraphics = p.getMessageFromGraphics();
@@ -266,7 +266,7 @@ This function checks if the action that has recently permofed will cause a chess
 Input: the game table to be checked,and the teams pieces vector
 Output: will a chess be performed :: bool
 */
-bool Game::checkChess(bool team,vector<Piece*> teams[], Piece* const table[][TABLE_SIZE]) const
+bool Game::checkChess(bool team, vector<Piece*> teams[], Piece* const table[][TABLE_SIZE]) const
 {
 	for (int i = 0; i < teams[!team].size(); i++)
 	{
@@ -276,12 +276,6 @@ bool Game::checkChess(bool team,vector<Piece*> teams[], Piece* const table[][TAB
 		}
 	}
 	return false;
-}
-
-
-void Game::checkMate() const
-{
-
 }
 
 /*
