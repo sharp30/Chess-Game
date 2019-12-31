@@ -44,17 +44,19 @@ protected:
 	int _movementCode; // number between 0 - 8, tells the frontend if the move is valid or not
 	vector<Piece*> _teams[2];
 	
-	void movePiece(Position src,Position dest); 
+	void movePiece(Position src,Position dest);
+	int checkMove(bool validPieceTeam, Position src, Position dest) const;
+
 	int checkMove(Position src, Position dest) const;
 	int checkMove(Piece* piece, Position dest) const;
 
 
-	bool checkFutureChess(Position src, Position dest) const;
+	bool checkFutureChess(bool team,Position src, Position dest) const;
 	bool checkFutureChess(Piece* piece, Position dest) const;
 	bool checkChess() const;
-	bool checkChess(vector<Piece*> teams[], Piece* const table[][TABLE_SIZE]) const;
+	bool checkChess(bool team,vector<Piece*> teams[], Piece* const table[][TABLE_SIZE]) const;
 	void checkMate() const;
-	bool canMove() const;
+	bool canMove(bool team) const;
 
 	void copyGameTableByVal(Piece* dest[][TABLE_SIZE]) const;
 	void copyGameTableByAdd(Piece* dest[][TABLE_SIZE]) const;

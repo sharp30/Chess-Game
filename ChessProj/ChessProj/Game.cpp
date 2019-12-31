@@ -70,7 +70,7 @@ void Game::manageGame()
 	while (msgFromGraphics != "quit")
 	{
 		Position::castStrToPos(src, dest, msgFromGraphics);
-		resultMove = this->checkMove(src, dest);
+		resultMove = this->checkMove(this->_turn,src, dest);
 		if (resultMove == VALID)
 		{
 			movePiece(src, dest);
@@ -135,7 +135,7 @@ void Game::movePiece(Position src,Position dest)
 	{
 		//#TODO: checking if any piece can move is not enough. checking if the 
 		//       king can be protected should be added. Only if it can't, it is a mate.
-		canOtherTeamMove = canMove();
+		canOtherTeamMove = canMove(!this->_turn);
 		this->_isChess = true;
 		this->_isMate = !canOtherTeamMove;
 	}
@@ -153,7 +153,7 @@ This function checks if the object can execute the move --- after all tests!!!
 input: The source position of the piece, the Destination position of the piece
 output: the movement code that will be sent to the frontend
 */
-int Game::checkMove(Position src, Position dest) const
+int Game::checkMove(bool validPieceTeam,Position src, Position dest) const
 {
 	int movementCode = VALID;
 
@@ -164,8 +164,8 @@ int Game::checkMove(Position src, Position dest) const
 	}
 	if (this->_table[src.getRow()][src.getCol()] != nullptr)
 	{
-		if (this->_table[src.getRow()][src.getCol()]->getColor().compare("white") == 0 && this->_turn ||
-			this->_table[src.getRow()][src.getCol()]->getColor().compare("black") == 0 && !this->_turn)
+		if (this->_table[src.getRow()][src.getCol()]->getColor().compare("white") == 0 && validPieceTeam ||
+			this->_table[src.getRow()][src.getCol()]->getColor().compare("black") == 0 && !validPieceTeam)
 		{
 			//if white piece in src and it is black's turn or
 			// black piece in src and it is white's turn 
@@ -180,8 +180,8 @@ int Game::checkMove(Position src, Position dest) const
 
 	if (this->_table[dest.getRow()][dest.getCol()] != nullptr)
 	{
-		if (this->_table[dest.getRow()][dest.getCol()]->getColor().compare("white") == 0 && !this->_turn ||
-			this->_table[dest.getRow()][dest.getCol()]->getColor().compare("black") == 0 && this->_turn)
+		if (this->_table[dest.getRow()][dest.getCol()]->getColor().compare("white") == 0 && !validPieceTeam ||
+			this->_table[dest.getRow()][dest.getCol()]->getColor().compare("black") == 0 && validPieceTeam)
 		{
 			//if white piece in dest and it is white's turn or
 			// black piece in dest and it is black's turn 
@@ -194,9 +194,8 @@ int Game::checkMove(Position src, Position dest) const
 		return INVALID_PIECE_MOVE;
 	}
 	
-	
 	//check if the move doesn't leads to chess
-	if (this->checkFutureChess(src, dest))
+	if (this->checkFutureChess(validPieceTeam,src, dest))
 	{
 		movementCode = FUTURE_CHESS_DANGER;
 	}
@@ -234,7 +233,6 @@ int Game::checkMove(Piece* piece, Position dest) const
 		return INVALID_PIECE_MOVE;
 	}
 
-
 	//check if the move doesn't leads to chess
 	if (this->checkFutureChess(piece, dest))
 	{
@@ -265,14 +263,14 @@ bool Game::checkChess() const
 
 /*
 This function checks if the action that has recently permofed will cause a chess on the team
-Input: the game table to be checked
+Input: the game table to be checked,and the teams pieces vector
 Output: will a chess be performed :: bool
 */
-bool Game::checkChess(vector<Piece*> teams[], Piece* const table[][TABLE_SIZE]) const
+bool Game::checkChess(bool team,vector<Piece*> teams[], Piece* const table[][TABLE_SIZE]) const
 {
-	for (int i = 0; i < teams[!this->_turn].size(); i++)
+	for (int i = 0; i < teams[!team].size(); i++)
 	{
-		if (teams[!this->_turn][i]->isValidMove(table, teams[this->_turn][0]->getPos()))
+		if (teams[!team][i]->isValidMove(table, teams[team][0]->getPos()))
 		{
 			return true;
 		}
@@ -288,22 +286,22 @@ void Game::checkMate() const
 
 /*
 the function will check if any piece of the team that being attacked can make any movement
-input: none
+input: the team to check on (if it can move)
 output: if any piece of the team that being attacked can make any movement
 ++++++true: it can move
 ------false: it can't move
 */
-bool Game::canMove() const //TODO:AFTER changing checkMove const add here
+bool Game::canMove(bool team) const 
 {
 	//run on all squares on 
-	for (int i = 0; i < this->_teams[!this->_turn].size(); i++)
+	for (int i = 0; i < this->_teams[team].size(); i++)
 	{
 		//run on all squares on table
 		for (int row = 0; row < TABLE_SIZE; row++)
 		{
 			for (int col = 0; col < TABLE_SIZE; col++)
 			{
-				if (this->checkMove(this->_teams[!this->_turn][i], Position(row, col)) == VALID)
+				if (this->checkMove(team,this->_teams[team][i]->getPos(), Position(row, col)) == VALID)
 				{
 					return true;
 				}
@@ -408,7 +406,7 @@ the function will check if the next move will cause the attacking team to self-c
 input: The source position of the piece, the Destination position of the piece
 output: true or false if the next move will cause the attacking team to self-chess
 */
-bool Game::checkFutureChess(Position src, Position dest) const
+bool Game::checkFutureChess(bool team,Position src, Position dest) const
 {
 	vector<Piece*> teams[2];
 	bool isFutureChess = false;
@@ -425,14 +423,14 @@ bool Game::checkFutureChess(Position src, Position dest) const
 	if (removed != nullptr)
 	{
 		//remove from vector
-		teams[!this->_turn].erase(std::find(teams[!this->_turn].begin(), teams[!this->_turn].end(), removed));
+		teams[!team].erase(std::find(teams[!team].begin(), teams[!team].end(), removed));
 	}
 
 	added->movePosition(dest);
 	cTable[dest.getRow()][dest.getCol()] = added;
 	cTable[src.getRow()][src.getCol()] = nullptr;
 
-	if (this->checkChess(teams, cTable))
+	if (this->checkChess(team,teams, cTable))
 	{
 		isFutureChess = true;
 	}
@@ -482,10 +480,10 @@ bool Game::checkFutureChess(Piece* piece, Position dest) const
 	cTable[dest.getRow()][dest.getCol()] = added;
 	cTable[piece->getPos().getRow()][piece->getPos().getCol()] = nullptr;
 
-	if (this->checkChess(teams, cTable))
-	{
-		isFutureChess = true;
-	}
+	//if (this->checkChess(teams, cTable))
+	//{
+	//	isFutureChess = true;
+	//}
 
 	added->movePosition(src);
 
