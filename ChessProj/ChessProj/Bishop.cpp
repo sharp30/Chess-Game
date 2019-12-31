@@ -15,7 +15,7 @@ bool Bishop::isValidMove( Piece* const table[][TABLE_SIZE], Position dest) const
 {
 	//check is dest is diagonal to the current position
 	double y = (signed)dest.getCol() - (signed)this->_pos.getCol();
-	double x = dest.getRow() - this->_pos.getRow();
+	double x = (signed)dest.getRow() - (signed)this->_pos.getRow();
 	double m = abs((double)(y / x));
 	if (this->_pos.getRow() == dest.getRow() || m != 1.0)
 	{
@@ -33,7 +33,7 @@ bool Bishop::isValidMove( Piece* const table[][TABLE_SIZE], Position dest) const
 			return false;
 		}
 		comp.setRow(comp.getRow() + (rowBigger ? -1 : 1));
-		comp.setCol(comp.getCol() + (rowBigger ? -1 : 1));
+		comp.setCol(comp.getCol() + (colBigger ? -1 : 1));
 	}
 	return true;
 }
