@@ -16,8 +16,8 @@ using std::string;
 
 int main()
 {
-	//Game g("rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR0");
-	Game g("###k###########p########################################R##KQ###0");
+	Game g("rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR0");
+	//Game g("###k###########p########################################R##KQ###0");
 	g.manageGame();
 
 	return 0;

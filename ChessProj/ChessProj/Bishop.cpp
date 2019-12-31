@@ -14,7 +14,10 @@ Output:Is the move valid? ::bool
 bool Bishop::isValidMove( Piece* const table[][TABLE_SIZE], Position dest) const
 {
 	//check is dest is diagonal to the current position
-	if (this->_pos.getRow() == dest.getRow() || abs((double)(dest.getCol() - this->_pos.getCol()) / (dest.getRow() - this->_pos.getRow())) != 1.0)
+	double y = (signed)dest.getCol() - (signed)this->_pos.getCol();
+	double x = dest.getRow() - this->_pos.getRow();
+	double m = abs((double)(y / x));
+	if (this->_pos.getRow() == dest.getRow() || m != 1.0)
 	{
 		return false;
 	}
