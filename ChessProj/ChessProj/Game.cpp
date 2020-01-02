@@ -16,7 +16,19 @@ Game::Game(string initBoard)
 	}
 }
 
-Game:: ~Game() = default;
+Game:: ~Game()
+{
+	for (int i = 0; i < TABLE_SIZE; i++)
+	{
+		for (int j = 0; j < TABLE_SIZE; j++)
+		{
+			if (this->_table[i][j] != nullptr)
+			{
+				delete this->_table[i][j];
+			}
+		}
+	}
+}
 
 void Game::manageGame()
 {	
